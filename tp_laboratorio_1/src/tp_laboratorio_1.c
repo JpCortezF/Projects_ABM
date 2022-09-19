@@ -3,11 +3,11 @@
 #include "administrarEquipo.h"
 #include "utn_get.h"
 
-
 int main(void) {
 	setbuf(stdout, NULL);
 
 	int opcion;
+	int menuPrincipal;
 	int seCargo=0;
 	int seCalculo=0;
 	int confederacionAfc=0;
@@ -38,9 +38,9 @@ int main(void) {
 		printf("\n------------------------------------------\n");
 		printf("\n           Menu principal           \n\n");
 		printf("1. Ingreso de los costos de Mantenimiento\n");
-		printf(" Costo de Hospedaje -> $%.2f\n", costoHospedaje);
-		printf(" Costo de Comida -> $%.2f\n", costoComida);
-		printf(" Costo de Transporte -> $%.2f\n", costoTransporte);
+		printf(" Costo de Hospedaje -> $usd%.2f\n", costoHospedaje);
+		printf(" Costo de Comida -> $usd%.2f\n", costoComida);
+		printf(" Costo de Transporte -> $usd%.2f\n", costoTransporte);
 		printf("2.Carga de jugadores\n");
 		printf(" Arqueros -> %d\n", arqueros);
 		printf(" Defensores -> %d\n", defensores);
@@ -57,26 +57,29 @@ int main(void) {
 				break;
 			case 2:
 				cargarEquipo(&arqueros, &defensores, &mediocampistas, &delanteros, &confederacionAfc, &confederacionCaf, &confederacionConcacaf, &confederacionConmebol, &confederacionUefa, &confederacionOfc);
-				seCargo++;
+				if(arqueros!=0 || defensores!=0 || mediocampistas!=0 || delanteros!=0)
+				{
+					seCargo++;
+				}
 				break;
 			case 3:
 				if(seCargo != 0)
 				{
 					porcentajeTotal(&porcentajeAfc, confederacionAfc, LEN);
-					//
 					porcentajeTotal(&porcentajeCaf, confederacionCaf, LEN);
-					//
 					porcentajeTotal(&porcentajeConcacaf, confederacionConcacaf, LEN);
-					//
 					porcentajeTotal(&porcentajeConmebol, confederacionConmebol, LEN);
-					//
 					porcentajeTotal(&porcentajeUefa, confederacionUefa, LEN);
-					//
 					porcentajeTotal(&porcentajeOfc, confederacionOfc, LEN);
-					//
-					printf("\nSe realizaron los calculos correctamente!\n");
-					printf("\n------------------------------------------\n");
+					printf("\n--------------------------------------------");
+					printf("\n| Se realizaron los calculos correctamente!|");
+					printf("\n|------------------------------------------|\n");
+					utn_getNumberInt(&menuPrincipal, "\nIngrese '1' para volver al menu principal: ", "\nIngrese una opcion valida...\n",1,1,5);
 					seCalculo++;
+				}
+				else{
+					printf("\nNo hay nada cargado...\n");
+					utn_getNumberInt(&menuPrincipal, "\nIngrese '1' para volver al menu principal: ", "\nIngrese una opcion valida...\n",1,1,5);
 				}
 				break;
 			case 4:
@@ -89,13 +92,16 @@ int main(void) {
 					printf("Porcentaje Afc: %.2f\n", porcentajeAfc);
 					printf("Porcentaje Ofc: %.2f\n", porcentajeOfc);
 					printf("Porcentaje Caf: %.2f\n", porcentajeCaf);
+					seCalculo=0;
 					if(porcentajeUefa >= 50 && costoMantenimiento!=0){
 						aumentoUefa = (float) (costoMantenimiento / 100 ) * 35;
 						aumentoUefaTotal = costoMantenimiento * 1.35;
 						printf("\nel costo de mantenimiento era de $usd%.2f y recibio un aumento de $usd%.2f, su nuevo valor es de: $usd%.2f\n\n",costoMantenimiento, aumentoUefa, aumentoUefaTotal);
+						utn_getNumberInt(&menuPrincipal, "\nIngrese '1' para volver al menu principal: ", "\nIngrese una opcion valida...\n",1,1,5);
 					}
 					else{
-						printf("\nel costo de mantenimiento es de %.2f\n\n", costoMantenimiento);
+						printf("\nel costo de mantenimiento es de $usd%.2f\n\n", costoMantenimiento);
+						utn_getNumberInt(&menuPrincipal, "\nIngrese '1' para volver al menu principal: ", "\nIngrese una opcion valida...\n",1,1,5);
 					}
 					porcentajeUefa=0;
 					porcentajeConmebol=0;
@@ -105,7 +111,12 @@ int main(void) {
 					porcentajeCaf=0;
 					break;
 				}
+				else{
+					printf("\nPrimero tenes que hacer los calculos...\n");
+					utn_getNumberInt(&menuPrincipal, "\nIngrese '1' para volver al menu principal: ", "\nIngrese una opcion valida...\n",1,1,5);
+				}
 		}
 	}while(opcion!=5);
+	printf("\nGracias por usar el programa...");
 	return 0;
 }

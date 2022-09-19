@@ -38,7 +38,7 @@ int utn_getString(char* pResult, char* message, char* errorMessage, int attemps)
 }
 int myGets(char* cadena, int len)
 {
-	int todoOk=-1;
+	int retorno=-1;
 
 	if(cadena != NULL && len >0 && fgets(cadena, len, stdin)==cadena){
 		fflush(stdin);
@@ -46,13 +46,13 @@ int myGets(char* cadena, int len)
 		{
 			cadena[strlen(cadena)-1]='\0';
 		}
-		todoOk=0;
+		retorno=0;
 	}
-	return todoOk;
+	return retorno;
 }
 int utn_isNan(char* cadena)
 {
-	int todoOk=1;
+	int retorno=-1;
 
 	if(cadena !=NULL && strlen(cadena)>0){
 		for(int i=0; cadena[i] != '\0'; i++)
@@ -63,45 +63,45 @@ int utn_isNan(char* cadena)
 			}
 			if(cadena[i] < '0' || cadena [i] > '9')
 			{
-				todoOk=0;
+				retorno=0;
 				break;
 			}
 		}
 
 	}
-	return todoOk;
+	return retorno;
 }
 int getInt(int* pResultado)
 {
-	int todoOk=-1;
+	int retorno=-1;
 	char buffer[64];
 
 	if(pResultado != NULL){
 		if(myGets(buffer, sizeof(buffer)) ==0 && utn_isNan(buffer))
 		{
 			*pResultado = atoi(buffer);
-			todoOk=0;
+			retorno=0;
 		}
 	}
-	return todoOk;
+	return retorno;
 }
 int getFloat(float* pResult)
 {
-	int todoOk=-1;
+	int retorno=-1;
 	char buffer[64];
 
 	if(pResult != NULL){
 		if(myGets(buffer, sizeof(buffer)) ==0 && isFloat(buffer))
 		{
 			*pResult = atof(buffer);
-			todoOk=0;
+			retorno=0;
 		}
 	}
-	return todoOk;
+	return retorno;
 }
 int isFloat(char* cadena)
 {
-	int todoOk=1;
+	int retorno=1;
 	int pointsCount=0;
 
 	if(cadena !=NULL && strlen(cadena)>0){
@@ -119,17 +119,17 @@ int isFloat(char* cadena)
 				}
 				else
 				{
-					todoOk=0;
+					retorno=0;
 					break;
 				}
 			}
 		}
 	}
-	return todoOk;
+	return retorno;
 }
 int utn_getNumberInt(int* pResult, char* message, char* errorMessage, int min, int max, int attemps)
 {
-	int todoOk=1;
+	int retorno=-1;
 	int bufferInt;
 
 	do
@@ -140,10 +140,11 @@ int utn_getNumberInt(int* pResult, char* message, char* errorMessage, int min, i
 			fflush(stdin);
 			if((getInt(&bufferInt) == 0) || (scanf("%d", &bufferInt)))
 			{
+
 				if(bufferInt >= min && bufferInt <= max)
 				{
 					*pResult = bufferInt;
-					todoOk=0;
+					retorno=0;
 					break;
 				}
 				else
@@ -155,11 +156,11 @@ int utn_getNumberInt(int* pResult, char* message, char* errorMessage, int min, i
 		}
 	}while(attemps>= 0);
 
-	return todoOk;
+	return retorno;
 }
 int utn_getNumberFloat(float* pResult, char* message, char* errorMessage, float min, float max, int attemps)
 {
-	int todoOk=-1;
+	int retorno=-1;
 	float bufferFloat;
 
 	while(attemps>= 0)
@@ -173,7 +174,7 @@ int utn_getNumberFloat(float* pResult, char* message, char* errorMessage, float 
 				if(bufferFloat >= min && bufferFloat <= max)
 				{
 					*pResult = bufferFloat;
-					todoOk=0;
+					retorno=0;
 					break;
 				}
 			}
@@ -183,6 +184,5 @@ int utn_getNumberFloat(float* pResult, char* message, char* errorMessage, float 
 			}
 		}
 	}
-	return todoOk;
+	return retorno;
 }
-
