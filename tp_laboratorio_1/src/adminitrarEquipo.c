@@ -46,7 +46,7 @@ int calcularCosto(float* pHospedaje, float* pComida, float* pTransporte, float* 
 	}
 	return retorno;
 }
-int cargarEquipo(int* arquero, int* defensor, int* mediocampista, int* delantero,  int* confederacionAfc, int* confederacionCaf, int* confederacionConcacaf, int* confederacionConmebol, int* confederacionUefa, int* confederacionOfc)
+int cargarEquipo(int* arquero, int* defensor, int* mediocampista, int* delantero,  int* confederacionAfc, int* confederacionCaf, int* confederacionConcacaf, int* confederacionConmebol, int* confederacionUefa, int* confederacionOfc, int* jugodoresTotal)
 {
 	int retorno=-1;
 	int posicion;
@@ -124,6 +124,7 @@ int cargarEquipo(int* arquero, int* defensor, int* mediocampista, int* delantero
 				printf(" Mediocampistas -> %d\n", *mediocampista);
 				printf(" Delanteros -> %d\n", *delantero);
 				printf("\nPosicion: %s -> Dorsal: %d -> CONFEDERACION: %s\n", posicionJugador, dorsal, confederacion);
+				(*jugodoresTotal)++;
 			}
 		}while(posicion!=5);
 		retorno=0;
@@ -169,12 +170,22 @@ int elegirConfederacion(char* confederacion, int* confederacionAfc, int* confede
 	}
 	return retorno;
 }
-int promedioTotal(float* promedio, int sumaTotal, int len)
+int promedioTotal(float* promedio, int sumaTotal, int confederaciones)
+{
+	int retorno=-1;
+	if(promedio!=NULL)
+	{
+		*promedio = ((float) sumaTotal / confederaciones);
+		retorno=0;
+	}
+	return retorno;
+}
+int porcentajeTotal(float* promedio, int sumaTotal, int len)
 {
 	int retorno=-1;
 	if(promedio!=NULL && len > 0)
 	{
-		*promedio = (float) sumaTotal / len;
+		*promedio = ((float) sumaTotal / len) * 100;
 		retorno=0;
 	}
 	return retorno;
