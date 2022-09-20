@@ -39,12 +39,12 @@ int cargarEquipo(int* arquero, int* defensor, int* mediocampista, int* delantero
  */
 int elegirConfederacion(char* confederacion, int* confederacionAfc, int* confederacionCaf, int* confederacionConcacaf, int* confederacionConmebol, int* confederacionEufa, int* confederacionOfc);
 /**
- * Guarda el porcentaje de la confederacion
- * @param porcentaje Es un puntero que guarda el porcentaje de la confederacion
+ * Guarda el promedio por confederacion
+ * @param promedio Es un puntero que guarda el promedio de la confederacion
  * @param sumaTotal Es un entero que guarda la cuenta de cada confederacion
  * @param len El 100% de jugadores posibles a cargar
  * @return retorna 0 si  OK. retorna -1 si hay un ERROR.
  */
-int porcentajeTotal(float* porcentaje, int sumaTotal, int len);
+int promedioTotal(float* promedio, int sumaTotal, int len);
 
 #endif /* ADMINISTRAREQUIPO_H_ */

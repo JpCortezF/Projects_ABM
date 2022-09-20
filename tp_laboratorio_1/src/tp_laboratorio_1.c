@@ -20,12 +20,12 @@ int main(void) {
 	float costoComida=0;
 	float costoTransporte=0;
 	float costoMantenimiento=0;
-	float porcentajeAfc=0;
-	float porcentajeCaf=0;
-	float porcentajeConcacaf=0;
-	float porcentajeConmebol=0;
-	float porcentajeUefa=0;
-	float porcentajeOfc=0;
+	float promedioAfc=0;
+	float promedioCaf=0;
+	float promedioConcacaf=0;
+	float promedioConmebol=0;
+	float promedioUefa=0;
+	float promedioOfc=0;
 	float aumentoUefa;
 	float aumentoUefaTotal;
 	int arqueros=0;
@@ -65,12 +65,12 @@ int main(void) {
 			case 3:
 				if(seCargo != 0)
 				{
-					porcentajeTotal(&porcentajeAfc, confederacionAfc, LEN);
-					porcentajeTotal(&porcentajeCaf, confederacionCaf, LEN);
-					porcentajeTotal(&porcentajeConcacaf, confederacionConcacaf, LEN);
-					porcentajeTotal(&porcentajeConmebol, confederacionConmebol, LEN);
-					porcentajeTotal(&porcentajeUefa, confederacionUefa, LEN);
-					porcentajeTotal(&porcentajeOfc, confederacionOfc, LEN);
+					promedioTotal(&promedioAfc, confederacionAfc, LEN);
+					promedioTotal(&promedioCaf, confederacionCaf, LEN);
+					promedioTotal(&promedioConcacaf, confederacionConcacaf, LEN);
+					promedioTotal(&promedioConmebol, confederacionConmebol, LEN);
+					promedioTotal(&promedioUefa, confederacionUefa, LEN);
+					promedioTotal(&promedioOfc, confederacionOfc, LEN);
 					printf("\n--------------------------------------------");
 					printf("\n| Se realizaron los calculos correctamente!|");
 					printf("\n|------------------------------------------|\n");
@@ -86,29 +86,29 @@ int main(void) {
 				if(seCalculo!=0)
 				{
 					printf("\n\n     Informar todos los resultados      \n\n");
-					printf("Poncentaje Uefa: %.2f\n", porcentajeUefa);
-					printf("Porcentaje Conmebol: %.2f\n", porcentajeConmebol);
-					printf("Porcentaje Concacaf: %.2f\n", porcentajeConcacaf);
-					printf("Porcentaje Afc: %.2f\n", porcentajeAfc);
-					printf("Porcentaje Ofc: %.2f\n", porcentajeOfc);
-					printf("Porcentaje Caf: %.2f\n", porcentajeCaf);
+					printf("Promedio Uefa: %.2f\n",promedioUefa);
+					printf("Promedio Conmebol: %.2f\n", promedioConmebol);
+					printf("Promedio Concacaf: %.2f\n", promedioConcacaf);
+					printf("Promedio Afc: %.2f\n", promedioAfc);
+					printf("Promedio Ofc: %.2f\n", promedioOfc);
+					printf("Promedio Caf: %.2f\n", promedioCaf);
 					seCalculo=0;
-					if(porcentajeUefa >= 50 && costoMantenimiento!=0){
+					if(promedioUefa >= 50 && costoMantenimiento!=0){
 						aumentoUefa = (float) (costoMantenimiento / 100 ) * 35;
 						aumentoUefaTotal = costoMantenimiento * 1.35;
-						printf("\nel costo de mantenimiento era de $usd%.2f y recibio un aumento de $usd%.2f, su nuevo valor es de: $usd%.2f\n\n",costoMantenimiento, aumentoUefa, aumentoUefaTotal);
+						printf("\nel costo de mantenimiento era de $usd %.2f y recibio un aumento de $usd %.2f, su nuevo valor es de: $usd %.2f\n\n",costoMantenimiento, aumentoUefa, aumentoUefaTotal);
 						utn_getNumberInt(&menuPrincipal, "\nIngrese '1' para volver al menu principal: ", "\nIngrese una opcion valida...\n",1,1,5);
 					}
 					else{
-						printf("\nel costo de mantenimiento es de $usd%.2f\n\n", costoMantenimiento);
+						printf("\nel costo de mantenimiento es de $usd %.2f\n\n", costoMantenimiento);
 						utn_getNumberInt(&menuPrincipal, "\nIngrese '1' para volver al menu principal: ", "\nIngrese una opcion valida...\n",1,1,5);
 					}
-					porcentajeUefa=0;
-					porcentajeConmebol=0;
-					porcentajeConcacaf=0;
-					porcentajeAfc=0;
-					porcentajeOfc=0;
-					porcentajeCaf=0;
+					promedioUefa=0;
+					promedioConmebol=0;
+					promedioConcacaf=0;
+					promedioAfc=0;
+					promedioOfc=0;
+					promedioCaf=0;
 					break;
 				}
 				else{

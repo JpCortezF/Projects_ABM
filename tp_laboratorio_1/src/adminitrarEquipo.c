@@ -169,12 +169,12 @@ int elegirConfederacion(char* confederacion, int* confederacionAfc, int* confede
 	}
 	return retorno;
 }
-int porcentajeTotal(float* porcentaje, int sumaTotal, int len)
+int promedioTotal(float* promedio, int sumaTotal, int len)
 {
 	int retorno=-1;
-	if(porcentaje!=NULL && len > 0)
+	if(promedio!=NULL && len > 0)
 	{
-		*porcentaje = ((float) sumaTotal / len) * 100;
+		*promedio = (float) sumaTotal / len;
 		retorno=0;
 	}
 	return retorno;
