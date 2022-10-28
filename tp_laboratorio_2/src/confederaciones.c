@@ -174,11 +174,11 @@ int bajaConfederacion(eConfederacion* confederaciones, int lenConf)
 	if(confederaciones !=NULL && lenConf > 0)
 	{
 		listarConfederaciones(confederaciones, lenConf);
-		utn_getNumberInt(&id,"\nIngrese ID del jugador: ","\nExcede los parametros posibles...\n",1,30000,10);
+		utn_getNumberInt(&id,"\nIngrese ID de la confederacion: ","\nExcede los parametros posibles...\n",1,30000,10);
 		indice = buscarConfederacionPorId(confederaciones, lenConf, id);
 		if(indice==-1)
 		{
-			printf("\nNo hay una conferencia con el ID: %d\n", id);
+			printf("\nNo hay una confederacion con el ID: %d\n", id);
 		}
 		else{
 			imprimirCabecera();
@@ -212,11 +212,11 @@ int modifcarConfederacion(eConfederacion* confederaciones, int lenConf)
 	if(confederaciones !=NULL && lenConf > 0)
 	{
 		listarConfederaciones(confederaciones, lenConf);
-		utn_getNumberInt(&id,"\nIngrese ID de la conferencia: ","\nExcede los parametros posibles...\n",1,30000,10);
+		utn_getNumberInt(&id,"\nIngrese ID de la confederacion: ","\nExcede los parametros posibles...\n",1,30000,10);
 		indice = buscarConfederacionPorId(confederaciones, lenConf, id);
 		if(indice==-1)
 		{
-			printf("\nNo hay una conferencia con el ID: %d\n", id);
+			printf("\nNo hay una confederacion con el ID: %d\n", id);
 		}
 		else{
 			imprimirCabecera();

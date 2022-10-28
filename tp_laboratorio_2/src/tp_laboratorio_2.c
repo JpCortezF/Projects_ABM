@@ -20,13 +20,13 @@ int main(void) {
 	int bajas;
 	int modificacion;
 	int idConfederacion=105;
-	int idJugador=7;
+	int idJugador=0; // EN CASO DE DESCOMENTAR EL HARDCODEO DE JUGADORES INICIALIZAR idJugador en 7.
 	eJugador jugadores[LEN];
 	eConfederacion confederaciones[CONF];
 
 	inicializarJugadores(jugadores, LEN);
 	inicializarConfederacion(confederaciones, CONF);
-//	hardcodeoJugadores(jugadores);
+//	hardcodeoJugadores(jugadores); // EN CASO DE DESCOMENTAR EL HARDCODEO DE JUGADORES INICIALIZAR idJugador en 7.
 	hardcodeoConfederacion(confederaciones);
 	do
 	{

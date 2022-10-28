@@ -127,7 +127,7 @@ int promediarSalarios(eJugador* jugadores, eConfederacion* confederaciones, int 
 }
 int contarAnios(eJugador* jugadores, int len, int idConfederacion)
 {
-	int cantAnios=-1;
+	int cantAnios=0;
 
 	if(jugadores!=NULL && len > 0)
 	{
@@ -157,7 +157,7 @@ int confederacionConMasAnios(eJugador* jugadores, eConfederacion* confederacione
 				if(i== 0)
 				{
 					auxAnios = contarAnios(jugadores, len, jugadores->idConfederacion);
-					maxAnios = (*(jugadores)).idConfederacion;
+					maxAnios = jugadores->idConfederacion;
 					aniosConfederacion = auxAnios;
 				}
 				else if((*(jugadores+i)).idConfederacion != (*(jugadores+i-1)).idConfederacion)
