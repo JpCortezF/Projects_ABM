@@ -91,24 +91,32 @@ int altaJugador(eJugador* jugadores, eConfederacion* confederaciones, int len, i
 	{
 		listarConfederaciones(confederaciones, lenConf);
 		utn_getNumberInt(&nuevoJugador.idConfederacion, "\nIngrese un ID confederacion de los mostrados arriba: ", "\nError, ingrese una opcion valida...",100,idConfederacion,15);
-		indice = buscarJugadorLibre(jugadores, len);
-		if(indice!=-1)
+		indice = buscarJugadorPorId(jugadores, len, nuevoJugador.idConfederacion);
+		if(indice==-1)
 		{
-			utn_getString(auxNombre, "\nIngrese nombre: ","\nIngrese un nombre mas corto...",15);
-			strcpy(nuevoJugador.nombre, auxNombre);
-			utn_getString(auxPosicion, "\nIngrese posicion: ","\nIngrese un nombre mas corto...",15);
-			strcpy(nuevoJugador.posicion, auxPosicion);
-			utn_getShortInt(&nuevoJugador.numeroCamiseta, "\nIngrese dorsal: ", "\nIngrese un numero de camiseta mas chico (1-99)...",1,99,15);
-			utn_getNumberFloat(&nuevoJugador.salario, "\nIngrese salario: ", "\nIngrese un salario valido...",20000, 9999999999, 15);
-			utn_getShortInt(&nuevoJugador.aniosContrato, "\nIngrese años de contrato: ", "\nIngrese años de contrato validos...",1,15,15);
-			(*idJugador)++;
-			nuevoJugador.isEmpty = 0;
-			nuevoJugador.id = *idJugador;
-
-			(*(jugadores+indice)) = nuevoJugador;
+			printf("\nNo hay una confederacion con el ID: %d\n", nuevoJugador.idConfederacion);
 		}
-		else{
-			printf("\nNo hay espacio para dar de alta mas jugadores...\n");
+		else
+		{
+			indice = buscarJugadorLibre(jugadores, len);
+			if(indice!=-1)
+			{
+				utn_getString(auxNombre, "\nIngrese nombre: ","\nIngrese un nombre mas corto...",15);
+				strcpy(nuevoJugador.nombre, auxNombre);
+				utn_getString(auxPosicion, "\nIngrese posicion: ","\nIngrese un nombre mas corto...",15);
+				strcpy(nuevoJugador.posicion, auxPosicion);
+				utn_getShortInt(&nuevoJugador.numeroCamiseta, "\nIngrese dorsal: ", "\nIngrese un numero de camiseta mas chico (1-99)...",1,99,15);
+				utn_getNumberFloat(&nuevoJugador.salario, "\nIngrese salario: ", "\nIngrese un salario valido...",20000, 9999999999, 15);
+				utn_getShortInt(&nuevoJugador.aniosContrato, "\nIngrese años de contrato: ", "\nIngrese años de contrato validos...",1,15,15);
+				(*idJugador)++;
+				nuevoJugador.isEmpty = 0;
+				nuevoJugador.id = *idJugador;
+
+				(*(jugadores+indice)) = nuevoJugador;
+			}
+			else{
+				printf("\nNo hay espacio para dar de alta mas jugadores...\n");
+			}
 		}
 		retorno=0;
 	}
