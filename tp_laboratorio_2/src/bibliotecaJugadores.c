@@ -91,7 +91,7 @@ int altaJugador(eJugador* jugadores, eConfederacion* confederaciones, int len, i
 	{
 		listarConfederaciones(confederaciones, lenConf);
 		utn_getNumberInt(&nuevoJugador.idConfederacion, "\nIngrese un ID confederacion de los mostrados arriba: ", "\nError, ingrese una opcion valida...",100,idConfederacion,15);
-		indice = buscarJugadorPorId(jugadores, len, nuevoJugador.idConfederacion);
+		indice = buscarConfederacionPorId(confederaciones, lenConf, nuevoJugador.idConfederacion);
 		if(indice==-1)
 		{
 			printf("\nNo hay una confederacion con el ID: %d\n", nuevoJugador.idConfederacion);
