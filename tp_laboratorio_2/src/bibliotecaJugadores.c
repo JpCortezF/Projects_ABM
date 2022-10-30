@@ -103,7 +103,7 @@ int altaJugador(eJugador* jugadores, eConfederacion* confederaciones, int len, i
 			{
 				utn_getString(auxNombre, "\nIngrese nombre: ","\nIngrese un nombre mas corto...",15);
 				strcpy(nuevoJugador.nombre, auxNombre);
-				utn_getString(auxPosicion, "\nIngrese posicion: ","\nIngrese un nombre mas corto...",15);
+				utn_getString(auxPosicion, "\nIngrese posicion: ","\nIngrese una posicion mas corta...",15);
 				strcpy(nuevoJugador.posicion, auxPosicion);
 				utn_getShortInt(&nuevoJugador.numeroCamiseta, "\nIngrese dorsal: ", "\nIngrese un numero de camiseta mas chico (1-99)...",1,99,15);
 				utn_getNumberFloat(&nuevoJugador.salario, "\nIngrese salario: ", "\nIngrese un salario valido...",20000, 9999999999, 15);

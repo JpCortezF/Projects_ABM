@@ -239,8 +239,8 @@ int modifcarConfederacion(eConfederacion* confederaciones, int lenConf)
 					break;
 					printf("\n!Modificacion exitosa!\n");
 			}
+			listarConfederaciones(confederaciones, lenConf);
 		}
-		listarConfederaciones(confederaciones, lenConf);
 		retorno=0;
 	}
 	return retorno;

@@ -36,17 +36,20 @@ int ordenarPorConfederacionYNombre(eJugador* jugadores, eConfederacion* confeder
 			 {
 				 for(int j=i+1; j<len; j++)
 				 {
-					 if((*(jugadores+i)).idConfederacion > (*(jugadores+j)).idConfederacion)
+					 if((*(jugadores+j)).isEmpty == 0)
 					 {
-						 auxJugador = (*(jugadores+i));
-						 (*(jugadores+i)) = (*(jugadores+j));
-						 (*(jugadores+j)) = auxJugador;
-					 }
-					 else if(((*(jugadores+i)).idConfederacion == (*(jugadores+j)).idConfederacion) && (strncmp((*(jugadores+i)).nombre, (*(jugadores+j)).nombre, 51) > 0))
-					 {
-						 auxJugador = (*(jugadores+i));
-						 (*(jugadores+i)) = (*(jugadores+j));
-						 (*(jugadores+j)) = auxJugador;
+						 if((*(jugadores+i)).idConfederacion > (*(jugadores+j)).idConfederacion)
+						 {
+							 auxJugador = (*(jugadores+i));
+							 (*(jugadores+i)) = (*(jugadores+j));
+							 (*(jugadores+j)) = auxJugador;
+						 }
+						 else if(((*(jugadores+i)).idConfederacion == (*(jugadores+j)).idConfederacion) && (strncmp((*(jugadores+i)).nombre, (*(jugadores+j)).nombre, 51) > 0))
+						 {
+							 auxJugador = (*(jugadores+i));
+							 (*(jugadores+i)) = (*(jugadores+j));
+							 (*(jugadores+j)) = auxJugador;
+						 }
 					 }
 				 }
 			 }
@@ -252,7 +255,7 @@ int regionConMasJugadores(eJugador* jugadores, eConfederacion* confederaciones, 
 				if(i == 0)
 				{
 					auxRegion = contarRegion(jugadores, len, jugadores->idConfederacion);
-					regionMax = (*(jugadores)).idConfederacion;
+					regionMax = jugadores->idConfederacion;
 					jugadorEnRegion = auxRegion;
 				}
 				else if((*(jugadores+i)).idConfederacion != (*(jugadores+i-1)).idConfederacion)
