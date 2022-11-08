@@ -123,21 +123,21 @@ int selec_getConvocados(Seleccion* this,int* convocados)
 }
 void printHeadboardSeleccion()
 {
-	puts("|======|==================|===============|==============|");
-	puts("|  ID  |       Pais       | Confederacion |  Convocados  |");
-	puts("|------|------------------|---------------|--------------|");
+	puts("|======|================|===============|==============|");
+	puts("|  ID  |      Pais      | Confederacion |  Convocados  |");
+	puts("|------|----------------|---------------|--------------|");
 }
 void printOneSeleccion(Seleccion* unaSeleccion)
 {
 	int id;
 	char pais[30];
-	char confederacion[30];
+	char confederacion[60];
 	int convocados;
 	selec_getId(unaSeleccion, &id);
 	selec_getPais(unaSeleccion, pais);
 	selec_getConfederacion(unaSeleccion, confederacion);
 	selec_getConvocados(unaSeleccion, &convocados);
-	printf("|  %2d  | %15s  | %8s | %2d |\n",id,pais,confederacion,convocados);
+	printf("|  %2d  | %14s |   %8s    |      %2d      |\n",id,pais,confederacion,convocados);
 }
 int printListSeleccion(LinkedList* pArrayListSeleccion)
 {
@@ -147,7 +147,7 @@ int printListSeleccion(LinkedList* pArrayListSeleccion)
 
 	if(pArrayListSeleccion!=NULL)
 	{
-		//printHeadboardSeleccion();
+		printHeadboardSeleccion();
 		cantidad=ll_len(pArrayListSeleccion);
 		if(cantidad > 0)
 		{
@@ -156,7 +156,7 @@ int printListSeleccion(LinkedList* pArrayListSeleccion)
 				seleccion = ll_get(pArrayListSeleccion, i);
 				printOneSeleccion(seleccion);
 			}
-			printf("|=========================================|\n");
+			printf("|======================================================|\n");
 		}else{
     		printf("\nNo hay selecciones cargadas...\n");
 		}
@@ -180,6 +180,46 @@ int compareStrings(char* pais, char* nacionalidad)
 		}
 	}
 	return retorno;
+}
+int confederacionPorId(LinkedList* pArrayListSeleccion, int idConfederacion, char* confederacion)
+{
+	int retorno=-1;
+	int index;
+
+	Seleccion* seleccionado;
+	if(pArrayListSeleccion!=NULL)
+	{
+		if(idConfederacion==4)
+		{
+			idConfederacion=8;
+		}
+		else if(idConfederacion==5)
+		{
+			idConfederacion=7;
+		}
+		index = searchSeleccionById(pArrayListSeleccion, idConfederacion);
+		seleccionado = ll_get(pArrayListSeleccion, index);
+		switch(idConfederacion)
+		{
+			case 1:
+				selec_getConfederacion(seleccionado, confederacion);
+				break;
+			case 2:
+				selec_getConfederacion(seleccionado, confederacion);
+				break;
+			case 3:
+				selec_getConfederacion(seleccionado, confederacion);
+				break;
+			case 8:
+				selec_getConfederacion(seleccionado, confederacion);
+				break;
+			case 7:
+				selec_getConfederacion(seleccionado, confederacion);
+				break;
+		}
+		retorno=0;
+	}
+	return retorno;;
 }
 int searchSeleccionById(LinkedList* pArrayListSeleccion, int idSeleccion)
 {
@@ -207,8 +247,8 @@ int convocarJugadores(LinkedList* pArrayListSeleccion, LinkedList* pArrayListJug
 {
 	int retorno=-1;
 	char option;
-	char pais[30];
-	char nacionalidad[30];
+	char pais[60];
+	char nacionalidad[62];
 	int getIdSeleccion;
 	int index;
 	int cantidad;
@@ -222,100 +262,99 @@ int convocarJugadores(LinkedList* pArrayListSeleccion, LinkedList* pArrayListJug
 
 	if(pArrayListSeleccion!=NULL)
 	{
-    	utn_getChar(&option,"\nA) Convocar\nB) Quitar de la seleccion\n->: ","\nIngrese una opcion valida...",'A','B',200);
-		cantidad = ll_len(pArrayListJugador);
-		if(cantidad > 0)
+		if(!(ll_isEmpty(pArrayListJugador)))
 		{
-			printListPlayers(pArrayListJugador);
-			switch(option)
+			utn_getChar(&option,"\nA) Convocar\nB) Quitar de la seleccion\n->: ","\nIngrese una opcion valida...",'A','B',200);
+			cantidad = ll_len(pArrayListJugador);
+			if(cantidad > 0)
 			{
-				case 'A':
-					utn_getNumberInt(&idJugador, "\nIngrese ID del jugador para convocar: ","\nErorr, ingrese un ID valido...",1,10000000,200);
-					indexJugador = searchPlayerById(pArrayListJugador, idJugador);
-					break;
-				case 'B':
-					utn_getNumberInt(&idJugador, "\nIngrese ID del jugador para quitar: ","\nErorr, ingrese un ID valido...",1,10000000,200);
-					indexJugador = searchPlayerById(pArrayListJugador, idJugador);
-					break;
-			}
-			if(indexJugador==-1)
-			{
-				printf("\nNo se encontro al ID: %d\n", idJugador);
-			}
-			else
-			{
-				unJugador = ll_get(pArrayListJugador, indexJugador);
-				jug_getIdSeleccion(unJugador, &idSeleccion);
-				if(idSeleccion == 0 && option == 'A')
+				printListPlayers(pArrayListJugador, pArrayListSeleccion);
+				switch(option)
 				{
-					printHeadboard();
-					printOnePlayer(unJugador);
-					utn_getNumberInt(&continuar,"\nIngrese '1' para continuar: ","\nError, ingrese '1' para continuar...",1,1,200);
-					printListSeleccion(pArrayListSeleccion);
-					utn_getNumberInt(&idSeleccion,"\nIngrese un ID para seleccionar seleccionado: ", "\nError, ingrese un ID opcion valida...",1,32,200);
-					index = searchSeleccionById(pArrayListSeleccion, idSeleccion);
+					case 'A':
+						utn_getNumberInt(&idJugador, "\nIngrese ID del jugador para convocar: ","\nErorr, ingrese un ID valido...",1,10000000,200);
+						indexJugador = searchPlayerById(pArrayListJugador, idJugador);
+						break;
+					case 'B':
+						utn_getNumberInt(&idJugador, "\nIngrese ID del jugador para quitar: ","\nErorr, ingrese un ID valido...",1,10000000,200);
+						indexJugador = searchPlayerById(pArrayListJugador, idJugador);
+						break;
+				}
+				if(indexJugador==-1)
+				{
+					printf("\nNo se encontro al ID: %d\n", idJugador);
+				}
+				else
+				{
+					unJugador = ll_get(pArrayListJugador, indexJugador);
+					jug_getIdSeleccion(unJugador, &idSeleccion);
+					if(idSeleccion == 0 && option == 'A')
+					{
+						printHeadboard();
+						printOnePlayer(unJugador);
+						utn_getNumberInt(&continuar,"\nIngrese '1' para continuar: ","\nError, ingrese '1' para continuar...",1,1,200);
+						printListSeleccion(pArrayListSeleccion);
+						utn_getNumberInt(&idSeleccion,"\nIngrese un ID para seleccionar seleccionado: ", "\nError, ingrese un ID opcion valida...",1,32,200);
+						index = searchSeleccionById(pArrayListSeleccion, idSeleccion);
 
-					if(index==-1)
-					{
-						printf("\nNo se encontro al ID: %d\n", idSeleccion);
-					}
-					else
-					{
-						unConvocado = ll_get(pArrayListSeleccion, index);
-						selec_getConvocados(unConvocado, &convocados);
-//						jug_getNacionalidad(unJugador, nacionalidad);
-//						selec_getPais(unConvocado, pais);
-						strcpy(nacionalidad,unJugador->nacionalidad);
-						strcpy(pais,unConvocado->pais);
-						if((compareStrings(pais, nacionalidad)) == 0)
+						if(index==-1)
 						{
-							jug_setIdSeleccion(unJugador, idSeleccion);
-							convocados++;
-							if(convocados < 22)
-							{
-								selec_setConvocados(unConvocado, convocados);
-								//printHeadboardSeleccionado();
-								printOneSummonedPlayer(unJugador, pArrayListSeleccion);
-							}
-							else
-							{
-								printf("\nNo podes llevar mas de 22 jugadores por Seleccion...\n");
-							}
+							printf("\nNo se encontro al ID: %d\n", idSeleccion);
 						}
 						else
 						{
-							//printf("pais: %s\n", pais);
-							//printf("nacionalidad: %s\n", nacionalidad);
-							printf("\n-> No podes convocar un jugador que su nacionalidad no corresponde con su pais...\n");
+							unConvocado = ll_get(pArrayListSeleccion, index);
+							selec_getConvocados(unConvocado, &convocados);
+							jug_getNacionalidad(unJugador, nacionalidad);
+							selec_getPais(unConvocado, pais);
+							if((compareStrings(pais, nacionalidad)) == 0)
+							{
+								jug_setIdSeleccion(unJugador, idSeleccion);
+								convocados++;
+								if(convocados <= 22)
+								{
+									selec_setConvocados(unConvocado, convocados);
+									printHeadboardSeleccionado();
+									printOneSummonedPlayer(unJugador, pArrayListSeleccion);
+								}
+								else
+								{
+									printf("\nNo podes llevar mas de 22 jugadores por Seleccion...\n");
+								}
+							}
+							else
+							{
+								printf("\n-> No podes convocar un jugador que su nacionalidad no corresponde con su pais...\n");
+							}
+						}
+					}
+					if(idSeleccion != 0 && option == 'B')
+					{
+						printHeadboard();
+						printOnePlayer(unJugador);
+						utn_getNumberInt(&continuar,"\nIngrese '1' para continuar: ","\nError, ingrese '1' para continuar...",1,1,200);
+						printListSeleccion(pArrayListSeleccion);
+						utn_getNumberInt(&idSeleccion,"\nIngrese un ID para quitar seleccionado: ", "\nError, ingrese un ID opcion valida...",1,32,200);
+						index = searchSeleccionById(pArrayListSeleccion, idSeleccion);
+						jug_getIdSeleccion(unJugador, &getIdSeleccion);
+						if(getIdSeleccion == idSeleccion)
+						{
+							jug_setIdSeleccion(unJugador, 0);
+							unConvocado = ll_get(pArrayListSeleccion, index);
+							selec_getConvocados(unConvocado, &convocados);
+							convocados--;
+							selec_setConvocados(unConvocado, convocados);
+						}else{
+							printf("\nEl jugador no pertecenece a ese seleccionado...\n");
 						}
 					}
 				}
-				if(idSeleccion != 0 && option == 'B')
-				{
-					printHeadboard();
-					printOnePlayer(unJugador);
-					utn_getNumberInt(&continuar,"\nIngrese '1' para continuar: ","\nError, ingrese '1' para continuar...",1,1,200);
-					printListSeleccion(pArrayListSeleccion);
-					utn_getNumberInt(&idSeleccion,"\nIngrese un ID para quitar seleccionado: ", "\nError, ingrese un ID opcion valida...",1,32,200);
-					index = searchSeleccionById(pArrayListSeleccion, idSeleccion);
-					jug_getIdSeleccion(unJugador, &getIdSeleccion);
-					if(getIdSeleccion == idSeleccion)
-					{
-						jug_setIdSeleccion(unJugador, 0);
-						unConvocado = ll_get(pArrayListSeleccion, index);
-						selec_getConvocados(unConvocado, &convocados);
-						convocados--;
-						selec_setConvocados(unConvocado, convocados);
-					}else{
-						printf("\nEl jugador no pertecenece a ese seleccionado...\n");
-					}
-				}
 			}
-		}
-		else{
-			printf("\nNo hay jugadores cargados...\n");
+		}else{
+    		puts("\nPrimero tenes que hacer la carga del archivo .csv!");
 		}
 		retorno=0;
 	}
 	return retorno;
 }
+

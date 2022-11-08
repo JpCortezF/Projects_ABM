@@ -10,7 +10,6 @@ int main()
 {
 	setbuf(stdout,NULL);
     int option;
-    int flag=0;
     char listado;
     LinkedList* listaJugadores = ll_newLinkedList();
     LinkedList* listaSelecciones = ll_newLinkedList();
@@ -37,40 +36,24 @@ int main()
             case 1:
             	controller_cargarJugadoresDesdeTexto("jugadores.csv",listaJugadores); // r
             	controller_cargarSeleccionesDesdeTexto("selecciones.csv", listaSelecciones); // r
-            	flag=1;
                 break;
             case 2:
-            	if(flag!=0)
-            	{
-            		controller_agregarJugador(listaJugadores);
-            	}else{
-            		puts("Primero tenes que hacer la carga del archivo .csv!");
-            	}
+            	controller_agregarJugador(listaJugadores);
             	break;
             case 3:
-            	if(flag!=0)
-            	{
-            		controller_editarJugador(listaJugadores);
-            	}else{
-            		puts("Primero tenes que hacer la carga del archivo .csv!");
-            	}
+            	controller_editarJugador(listaJugadores, listaSelecciones);
             	break;
             case 4:
-            	if(flag!=0)
-            	{
-            		controller_removerJugador(listaJugadores);
-            	}else{
-            		puts("Primero tenes que hacer la carga del archivo .csv!");
-            	}
+            	controller_removerJugador(listaJugadores, listaSelecciones);
             	break;
             case 5:
-            	if(flag!=0)
+        		if(!(ll_isEmpty(listaJugadores)))
             	{
 					utn_getChar(&listado,"\nA) LISTAR TODOS LOS JUGADORES\nB) TODAS LAS SELECCIONES\nC) JUGADORES CONVOCADOS\n-> Ingrese opcion: ", "\nIngrese una opcion valida...",'A','C',20);
 					switch(listado)
 					{
 						case 'A':
-							controller_listarJugadores(listaJugadores);
+							controller_listarJugadores(listaJugadores, listaSelecciones);
 							break;
 						case 'B':
 							controller_listarSelecciones(listaSelecciones);
@@ -80,53 +63,28 @@ int main()
 							break;
 					}
             	}else{
-            		puts("Primero tenes que hacer la carga del archivo .csv!");
+            		puts("\nPrimero tenes que hacer la carga del archivo .csv!");
             	}
             	break;
             case 6:
-            	if(flag!=0)
-            	{
-            		controller_convocarJugadores(listaSelecciones, listaJugadores);
-            	}else{
-            		puts("Primero tenes que hacer la carga del archivo .csv!");
-            	}
+            	controller_convocarJugadores(listaSelecciones, listaJugadores);
             	break;
             case 7:
-            	if(flag!=0)
-            	{
-            		controller_ordenarJugadores(listaJugadores, listaSelecciones);
-            	}else{
-            		puts("Primero tenes que hacer la carga del archivo .csv!");
-            	}
+            	controller_ordenarJugadores(listaJugadores, listaSelecciones);
             	break;
             case 8:
-            	if(flag!=0)
-            	{
-            		controller_guardarJugadoresModoBinario("data.bin", listaJugadores); //wb
-            	}else{
-            		puts("Primero tenes que hacer la carga del archivo .csv!");
-            	}
+            	controller_guardarJugadoresModoBinario("data.bin", listaJugadores, listaSelecciones); //wb
             	break;
             case 9:
-            	if(flag!=0)
-            	{
-            		controller_cargarJugadoresDesdeBinario("data.bin", listaJugadores); // rb
-            	}else{
-            		puts("Primero tenes que hacer la carga del archivo .csv!");
-            	}
+           		controller_cargarJugadoresDesdeBinario("data.bin", listaJugadores, listaSelecciones); // rb
             	break;
             case 10:
-            	if(flag!=0)
-            	{
-            		controller_guardarJugadoresModoTexto("jugadores.csv",listaJugadores); // w
-            		controller_guardarSeleccionesModoTexto("selecciones.csv", listaSelecciones); // w
-            		puts("\nArchivos .csv guardados correctamente!");
-            	}else{
-            		puts("Primero tenes que hacer la carga del archivo .csv!");
-            	}
+           		controller_guardarJugadoresModoTexto("jugadores.csv",listaJugadores); // w
+           		controller_guardarSeleccionesModoTexto("selecciones.csv", listaSelecciones); // w
             	break;
         }
     }while(option != 11);
-
+    ll_deleteLinkedList(listaJugadores);
+    ll_deleteLinkedList(listaSelecciones);
     return 0;
 }

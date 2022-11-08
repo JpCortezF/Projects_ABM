@@ -40,7 +40,7 @@ void printHeadboard(void);
 void printHeadboardSeleccionado(void);
 
 void printOnePlayer(Jugador* unJugador);
-int printListPlayers(LinkedList* pArrayListJugador);
+int printListPlayers(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion);
 
 void printOneSummonedPlayer(Jugador* unJugador, LinkedList* pArrayListSeleccion);
 int printSummonedPlayers(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion);
@@ -50,8 +50,8 @@ int searchPlayerById(LinkedList* pArrayListJugador, int id);
 int addPlayer(LinkedList* pArrayListJugador);
 int player_idGenerator(int* id);
 
-int removePlayer(LinkedList* pArrayListJugador);
-int editPlayer(LinkedList* pArrayListJugador);
+int editPlayer(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion);
+int removePlayer(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion);
 
 int compareByNacionality(void* jugadorUno, void* jugadorDos);
 int compareByConference(void* seleccionUno,void* seleccionDos);

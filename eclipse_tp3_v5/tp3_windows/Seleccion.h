@@ -31,6 +31,8 @@ void printOneSeleccion(Seleccion* unaSeleccion);
 int printListSeleccion(LinkedList* pArrayListSeleccion);
 
 int compareStrings(char* pais, char* nacionalidad);
+int confederacionPorId(LinkedList* pArrayListSeleccion, int idConfederacion, char* confederacion);
+
 int searchSeleccionById(LinkedList* pArrayListSeleccion, int idSeleccion);
 int convocarJugadores(LinkedList* pArrayListSeleccion, LinkedList* pArrayListJugador);
 
