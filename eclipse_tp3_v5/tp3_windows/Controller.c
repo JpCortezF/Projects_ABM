@@ -7,14 +7,6 @@
 #include "Seleccion.h"
 #include "LinkedList.h"
 
-
-/** \brief Carga los datos de los jugadores desde el archivo jugadores.csv (modo texto).
- *
- * \param path char*
- * \param pArrayListJugador LinkedList*
- * \return int
- *
- */
 int controller_cargarJugadoresDesdeTexto(char* path , LinkedList* pArrayListJugador)
 {
 	int retorno=-1;
@@ -36,14 +28,6 @@ int controller_cargarJugadoresDesdeTexto(char* path , LinkedList* pArrayListJuga
 	fclose(pFile);
 	return retorno;
 }
-
-/** \brief Carga los datos de los jugadores desde el archivo generado en modo binario.
- *
- * \param path char*
- * \param pArrayListJugador LinkedList*
- * \return int
- *
- */
 int controller_cargarJugadoresDesdeBinario(char* path , LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion)
 {
 	int retorno=-1;
@@ -54,23 +38,15 @@ int controller_cargarJugadoresDesdeBinario(char* path , LinkedList* pArrayListJu
 		if((pFile=fopen(path, "rb"))!=NULL)
 		{
 			parser_JugadorFromBinary(pFile, pArrayListJugador, pArrayListSeleccion);
+			retorno=0;
 		}
 		else{
 			printf("Ha ocurrido un error al abrir el archivo...\n");
 		}
-		retorno=0;
 	}
 	fclose(pFile);
     return retorno;
 }
-
-/** \brief Alta de jugadores
- *
- * \param path char*
- * \param pArrayListJugador LinkedList*
- * \return int
- *
- */
 int controller_agregarJugador(LinkedList* pArrayListJugador)
 {
 	int retorno=-1;
@@ -81,14 +57,6 @@ int controller_agregarJugador(LinkedList* pArrayListJugador)
 	}
     return retorno;
 }
-
-/** \brief Modificar datos del jugador
- *
- * \param path char*
- * \param pArrayListJugador LinkedList*
- * \return int
- *
- */
 int controller_editarJugador(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion)
 {
 	int retorno;
@@ -99,14 +67,6 @@ int controller_editarJugador(LinkedList* pArrayListJugador, LinkedList* pArrayLi
 	}
     return retorno;
 }
-
-/** \brief Baja del jugador
- *
- * \param path char*
- * \param pArrayListJugador LinkedList*
- * \return int
- *
- */
 int controller_removerJugador(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion)
 {
 	int retorno=-1;
@@ -118,14 +78,6 @@ int controller_removerJugador(LinkedList* pArrayListJugador, LinkedList* pArrayL
 	}
     return retorno;
 }
-
-/** \brief Listar jugadores
- *
- * \param path char*
- * \param pArrayListJugador LinkedList*
- * \return int
- *
- */
 int controller_listarJugadores(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion)
 {
 	int retorno=-1;
@@ -136,14 +88,6 @@ int controller_listarJugadores(LinkedList* pArrayListJugador, LinkedList* pArray
 	}
     return retorno;
 }
-
-/** \brief Ordenar jugadores
- *
- * \param path char*
- * \param pArrayListJugador LinkedList*
- * \return int
- *
- */
 int controller_ordenarJugadores(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion)
 {
 	int retorno=-1;
@@ -217,14 +161,6 @@ int controller_ordenarJugadores(LinkedList* pArrayListJugador, LinkedList* pArra
 	}
     return retorno;
 }
-
-/** \brief Guarda los datos de los jugadores en el archivo jugadores.csv (modo texto).
- *
- * \param path char*
- * \param pArrayListSeleccion LinkedList*
- * \return int
- *
- */
 int controller_guardarJugadoresModoTexto(char* path , LinkedList* pArrayListJugador)
 {
 	int retorno=-1;
@@ -264,27 +200,17 @@ int controller_guardarJugadoresModoTexto(char* path , LinkedList* pArrayListJuga
 		}else{
     		puts("\nPrimero tenes que hacer la carga del archivo .csv!");
     	}
+		retorno=0;
     	fclose(pFile);
     }
     return retorno;
 }
-
-/** \brief Guarda los datos de los jugadores en el archivo binario.
- *
- * \param path char*
- * \param pArrayListJugador LinkedList*
- * \return int
- *
- */
 int controller_guardarJugadoresModoBinario(char* path , LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion)
 {
 	int retorno=-1;
 	int cantidad;
 	int idConfederacion;
-	char confederacion[60];
-	char auxConfederacion[60];
 	int auxId;
-	Seleccion* seleccionado;
 	Jugador* unJugador;
 	FILE* pFile;
 
@@ -296,17 +222,48 @@ int controller_guardarJugadoresModoBinario(char* path , LinkedList* pArrayListJu
 			if(pFile!=NULL)
 			{
 				utn_getNumberInt(&idConfederacion,"\n|~~~INGRESE LA CONFEDERACION QUE QUIERE CREAR Y GUARDAR EN EL ARCHIVO~~~|\n1. UEFA\n2. AFC\n3. CONMEBOL\n4. CONCACAF\n5. CAF\n->: ","\nError. ingrese una opcion valida...",1,5,200);
-				confederacionPorId(pArrayListSeleccion, idConfederacion, auxConfederacion);
 				cantidad=ll_len(pArrayListJugador);
 				for(int i=0; i<cantidad;i++)
 				{
-					seleccionado = ll_get(pArrayListSeleccion, i);
-					selec_getConfederacion(seleccionado, confederacion);
 					unJugador = ll_get(pArrayListJugador, i);
 					jug_getIdSeleccion(unJugador, &auxId);
-					if((auxId!=0) && (stricmp(auxConfederacion, confederacion) == 0))
+					if(auxId!=0)
 					{
-						fwrite(unJugador,sizeof(Jugador),1,pFile);
+						ll_sort(pArrayListSeleccion, compareByConference, 1);
+						switch(idConfederacion)
+						{
+							case 1:
+								if(auxId == 1 || auxId == 5 || auxId == 11 || auxId == 14 || auxId == 16 || auxId == 17 || auxId == 19 || auxId == 20 || auxId == 25 || auxId == 26 || auxId == 29 || auxId == 30)
+								{
+									fwrite(unJugador,sizeof(Jugador),1,pFile);
+								}
+								break;
+							case 2:
+								if(auxId == 2 || auxId == 4 || auxId == 9 || auxId == 21 || auxId == 27 || auxId == 29)
+								{
+									fwrite(unJugador,sizeof(Jugador),1,pFile);
+								}
+								break;
+							case 3:
+								if(auxId == 3 || auxId == 6 || auxId == 13 || auxId == 32)
+								{
+									fwrite(unJugador,sizeof(Jugador),1,pFile);
+								}
+								break;
+							case 4:
+								if(auxId == 8 || auxId == 10 || auxId == 15 || auxId == 24)
+								{
+									fwrite(unJugador,sizeof(Jugador),1,pFile);
+								}
+								break;
+							case 5:
+								if(auxId == 7 || auxId == 18 || auxId == 23 || auxId == 28 || auxId == 31)
+								{
+									fwrite(unJugador,sizeof(Jugador),1,pFile);
+								}
+								break;
+						}
+						puts("\nCreando y guardando archivo binario 'data.bin'...");
 					}
 				}
 			}
@@ -323,7 +280,6 @@ int controller_guardarJugadoresModoBinario(char* path , LinkedList* pArrayListJu
 	fclose(pFile);
     return retorno;
 }
-
 int controller_convocarJugadores(LinkedList* pArrayListSeleccion, LinkedList* pArrayListJugador)
 {
 	int retorno=-1;
@@ -345,13 +301,6 @@ int controller_listarConvocados(LinkedList* pArrayListJugador, LinkedList* pArra
 	}
 	return retorno;
 }
-/** \brief Carga los datos de los selecciones desde el archivo selecciones.csv (modo texto).
- *
- * \param path char*
- * \param pArrayListSeleccion LinkedList*
- * \return int
- *
- */
 int controller_cargarSeleccionesDesdeTexto(char* path , LinkedList* pArrayListSeleccion)
 {
 	int retorno=-1;
@@ -364,6 +313,7 @@ int controller_cargarSeleccionesDesdeTexto(char* path , LinkedList* pArrayListSe
 			ll_clear(pArrayListSeleccion);
 			parser_SeleccionFromText(pFile, pArrayListSeleccion);
 			puts("-> Se cargaron las selecciones desde el archivo correctamente!!");
+			retorno=0;
 		}
 		else{
 			printf("Ha ocurrido un error al abrir el archivo...\n");
@@ -372,27 +322,6 @@ int controller_cargarSeleccionesDesdeTexto(char* path , LinkedList* pArrayListSe
 	fclose(pFile);
 	return retorno;
 }
-
-/** \brief Modificar datos de empleado
- *
- * \param path char*
- * \param pArrayListSeleccion LinkedList*
- * \return int
- *
- */
-int controller_editarSeleccion(LinkedList* pArrayListSeleccion)
-{
-    return 1;
-}
-
-
-/** \brief Listar selecciones
- *
- * \param path char*
- * \param pArrayListSeleccion LinkedList*
- * \return int
- *
- */
 int controller_listarSelecciones(LinkedList* pArrayListSeleccion)
 {
 	int retorno=-1;
@@ -403,26 +332,6 @@ int controller_listarSelecciones(LinkedList* pArrayListSeleccion)
 	}
     return retorno;
 }
-
-/** \brief Ordenar selecciones
- *
- * \param path char*
- * \param pArrayListSeleccion LinkedList*
- * \return int
- *
- */
-int controller_ordenarSelecciones(LinkedList* pArrayListSeleccion)
-{
-    return 1;
-}
-
-/** \brief Guarda los datos de los selecciones en el archivo selecciones.csv (modo texto).
- *
- * \param path char*
- * \param pArrayListSeleccion LinkedList*
- * \return int
- *
- */
 int controller_guardarSeleccionesModoTexto(char* path , LinkedList* pArrayListSeleccion)
 {
 	int retorno=-1;
@@ -455,6 +364,7 @@ int controller_guardarSeleccionesModoTexto(char* path , LinkedList* pArrayListSe
 		else{
 			printf("\nHa ocurrido un error al abrir el archivo...\n");
 		}
+		retorno=0;
 	}
 	fclose(pFile);
     return retorno;

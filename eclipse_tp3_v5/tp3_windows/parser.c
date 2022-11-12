@@ -4,12 +4,6 @@
 #include "Jugador.h"
 #include "Seleccion.h"
 
-/** \brief Parsea los datos de los jugadores desde el archivo jugadores.csv (modo texto).
- *
- * \param path char*
- * \param pArrayListJugador LinkedList*
- * \return int
- */
 int parser_JugadorFromText(FILE* pFile , LinkedList* pArrayListJugador)
 {
 	int retorno=-1;
@@ -30,17 +24,10 @@ int parser_JugadorFromText(FILE* pFile , LinkedList* pArrayListJugador)
 			unJugador = jug_newParametros(id,name,edad,posicion,nacionalidad,idSeleccion);
 			ll_add(pArrayListJugador, unJugador);
 		}
+		retorno=0;
 	}
 	return retorno;
 }
-
-/** \brief Parsea los datos de los jugadores desde el archivo binario.
- *
- * \param path char*
- * \param pArrayListJugador LinkedList*
- * \return int
- *
- */
 int parser_JugadorFromBinary(FILE* pFile, LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion)
 {
 	int retorno=-1;
@@ -48,30 +35,22 @@ int parser_JugadorFromBinary(FILE* pFile, LinkedList* pArrayListJugador, LinkedL
 
 	if(pArrayListJugador!=NULL)
 	{
+		printHeadboard();
 		while(!feof(pFile))
 		{
 			unJugador=jug_new();
 			fread(unJugador, sizeof(Jugador),1,pFile);
-			printSummonedPlayers(pArrayListJugador, pArrayListSeleccion);
+			printOneSummonedPlayer(unJugador, pArrayListSeleccion);
 			if(feof(pFile))
 			{
 				free(unJugador);
 				break;
 			}
-			ll_add(pArrayListJugador, unJugador);
 		}
 		retorno=0;
 	}
     return retorno;
 }
-
-/** \brief Parsea los datos de los selecciones desde el archivo selecciones.csv (modo texto).
- *
- * \param path char*
- * \param pArrayListSeleccion LinkedList*
- * \return int
- *
- */
 int parser_SeleccionFromText(FILE* pFile , LinkedList* pArrayListSeleccion)
 {
 	int retorno=-1;

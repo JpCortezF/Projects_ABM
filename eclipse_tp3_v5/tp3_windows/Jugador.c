@@ -171,12 +171,6 @@ void printHeadboard(void)
 	printf("|   ID  |       Nombre Completo       |    Edad    |       Posicion       |   Nacionalidad   |   IdSeleccion   |\n");
 	printf("|-------|-----------------------------|------------|----------------------|------------------|-----------------|\n");
 }
-void printHeadboardSeleccionado(void)
-{
-	printf("|=======|=============================|============|======================|==================|=================|\n");
-	printf("|   ID  |       Nombre Completo       |    Edad    |       Posicion       |   Nacionalidad   |   IdSeleccion   |\n");
-	printf("|-------|-----------------------------|------------|----------------------|------------------|-----------------|\n");
-}
 void printOnePlayer(Jugador* unJugador)
 {
 	int id;
@@ -184,6 +178,7 @@ void printOnePlayer(Jugador* unJugador)
 	int edad;
 	char posicion[60];
 	char nacionalidad[60];
+	char sinConvocar[40]={"No convocado"};
 	int idSeleccion;
 
 	if(unJugador!=NULL)
@@ -194,7 +189,7 @@ void printOnePlayer(Jugador* unJugador)
 		jug_getPosicion(unJugador, posicion);
 		jug_getNacionalidad(unJugador, nacionalidad);
 		jug_getIdSeleccion(unJugador, &idSeleccion);
-		printf("|  %3d  | %24s    |     %2d     | %20s | %15s  |        %2d       |\n",id,nombreCompleto,edad,posicion,nacionalidad,idSeleccion);
+		printf("|  %3d  | %24s    |     %2d     | %20s | %15s  | %15s |\n",id,nombreCompleto,edad,posicion,nacionalidad,sinConvocar);
 	}
 }
 int printListPlayers(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion)
@@ -226,6 +221,7 @@ int printListPlayers(LinkedList* pArrayListJugador, LinkedList* pArrayListSelecc
     	}else{
     		printf("\nNo hay jugadores cargados...\n");
     	}
+    	retorno=0;
 	}
 	return retorno;
 }
@@ -235,9 +231,9 @@ void printOneSummonedPlayer(Jugador* unJugador, LinkedList* pArrayListSeleccion)
 	char nombreCompleto[120];
 	int edad;
 	char posicion[60];
-	char nacionalidad[60];
+	char nacionalidad[42];
 	int idSeleccion;
-	char pais[40];
+	char pais[68];
 	int index;
 	Seleccion* seleccionado;
 
@@ -250,16 +246,9 @@ void printOneSummonedPlayer(Jugador* unJugador, LinkedList* pArrayListSeleccion)
 		jug_getNacionalidad(unJugador, nacionalidad);
 		jug_getIdSeleccion(unJugador, &idSeleccion);
 		index = searchSeleccionById(pArrayListSeleccion, idSeleccion);
-		if(index==-1)
-		{
-			printf("\nNo hay jugadores convocados...\n");
-		}
-		else
-		{
-			seleccionado = ll_get(pArrayListSeleccion, index);
-			selec_getPais(seleccionado, pais);
-			printf("|  %3d  | %24s    |     %2d     | %20s | %15s  | %15s |\n",id,nombreCompleto,edad,posicion,nacionalidad,pais);
-		}
+		seleccionado = ll_get(pArrayListSeleccion, index);
+		selec_getPais(seleccionado, pais);
+		printf("|  %3d  | %24s    |     %2d     | %20s | %15s  | %15s |\n",id,nombreCompleto,edad,posicion,nacionalidad,pais);
 	}
 }
 int printSummonedPlayers(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion)
@@ -274,7 +263,7 @@ int printSummonedPlayers(LinkedList* pArrayListJugador, LinkedList* pArrayListSe
     	cantidad = ll_len(pArrayListJugador);
     	if(cantidad > 0)
     	{
-    		printHeadboardSeleccionado();
+    		printHeadboard();
 			for(int i=0; i<cantidad; i++)
 			{
 				jugadores = ll_get(pArrayListJugador, i);
@@ -393,6 +382,7 @@ int removePlayer(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion)
 {
 	int retorno=-1;
 	int confirma;
+	int idJugador;
 	int convocados;
 	int index;
 	int id;
@@ -414,16 +404,23 @@ int removePlayer(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion)
 			else
 			{
 				unJugador = ll_get(pArrayListJugador, index);
+				jug_getId(unJugador, &idJugador);
 				printHeadboard();
-				printOnePlayer(unJugador);
-				printf("|==========================================================================================================|\n");
+				if(idJugador!=0)
+				{
+					printOneSummonedPlayer(unJugador, pArrayListSeleccion);
+				}
+				else{
+					printOnePlayer(unJugador);
+				}
+				printf("|==============================================================================================================|\n");
 				utn_getNumberInt(&confirma,"\nConfirmar la baja?\n1. Confirmar\n2. Cancelar\n ->: ","\nIngrese una opcion valida...",1,2,200);
 				switch(confirma)
 				{
 					case 1:
 						ll_remove(pArrayListJugador, index);
 						printf("	Baja confirmada!\n");
-						jug_getIdSeleccion(unJugador, &id);
+						jug_getIdSeleccion(unJugador, &idJugador);
 						if(id!=0)
 						{
 							index = searchSeleccionById(pArrayListSeleccion, id);
@@ -453,6 +450,7 @@ int editPlayer(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion)
 	char auxNombre[120];
 	char auxPosicion[60];
 	char auxNacionalidad[60];
+	int idJugador;
 	int auxEdad;
 	int index;
 	int edit;
@@ -473,9 +471,16 @@ int editPlayer(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion)
 				}
 				else{
 					unJugador = ll_get(pArrayListJugador, index);
+					jug_getId(unJugador, &idJugador);
 					printHeadboard();
-					printOnePlayer(unJugador);
-					printf("|==========================================================================================================|\n");
+					if(idJugador!=0)
+					{
+						printOneSummonedPlayer(unJugador, pArrayListSeleccion);
+					}
+					else{
+						printOnePlayer(unJugador);
+					}
+					printf("|==============================================================================================================|\n");
 					utn_getNumberInt(&edit,"\n\n1. Modificar nombre completo\n2. Modificar edad\n3. Modificar posicion\n4. Modificar nacionalidad\n ->: ","\nIngrese una opcion valida...",1,4,200);
 					switch(edit)
 					{
@@ -532,7 +537,6 @@ int compareByConference(void* seleccionUno,void* seleccionDos)
 		selec_getConfederacion(seleccionDos, confederacion2);
 		retorno = strcmp(confederacion, confederacion2);
 	}
-	printf("retorno: %d", retorno);
 	return retorno;
 }
 int compareByAge(void* jugadorUno,void* jugadorDos)
