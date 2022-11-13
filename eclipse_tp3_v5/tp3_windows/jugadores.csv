@@ -1,4 +1,4 @@
-id,nombreCompleto,edad,posicion,nacionalidad,idSelecion
+id,nombreCompleto,edad,posicion,nacionalidad,idSeleccion
 1,Emiliano Martinez,28,Portero,Argentino,0
 2,Juan Musso,27,Portero,Argentino,0
 3,Agustin Marchesin,33,Portero,Argentino,0
@@ -36,13 +36,13 @@ id,nombreCompleto,edad,posicion,nacionalidad,idSelecion
 35,angel Di Maria ,33,Extremo derecho,Argentino,0
 36,Eduardo Salvio,30,Extremo derecho,Argentino,0
 37,Maximiliano Meza,28,Extremo derecho,Argentino,0
-38,Lionel Messi,34,Mediapunta,Argentino,0
+38,Lionel Messi,34,Mediapunta,Argentino,3
 39,Paulo Dybala ,27,Mediapunta,Argentino,0
 40,Joaquin Correa,26,Mediapunta,Argentino,0
 41,Lautaro Martinez,23,Delantero centro,Argentino,0
 42,Lucas Alario,28,Delantero centro,Argentino,0
 43,Sergio Aguero,33,Delantero centro,Argentino,0
-44,Julian alvarez,21,Delantero centro,Argentino,0
+44,Julian alvarez,21,Delantero centro,Argentino,3
 45,Giovanni Simeone,25,Delantero centro,Argentino,0
 46,Lucas Boye,25,Delantero centro,Argentino,0
 47,Alisson,30,Portero,Brasilero,0
