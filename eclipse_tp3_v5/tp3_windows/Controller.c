@@ -337,8 +337,8 @@ int controller_guardarSeleccionesModoTexto(char* path , LinkedList* pArrayListSe
 	int retorno=-1;
 	int len;
 	int id;
-	char pais[60];
-	char confederacion[60];
+	char pais[62];
+	char confederacion[62];
 	int convocados;
 
 	FILE* pFile;

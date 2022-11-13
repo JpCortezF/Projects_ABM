@@ -34,8 +34,15 @@ int main()
         switch(option)
         {
             case 1:
-            	controller_cargarJugadoresDesdeTexto("jugadores.csv",listaJugadores); // r
-            	controller_cargarSeleccionesDesdeTexto("selecciones.csv", listaSelecciones); // r
+            	if((ll_isEmpty(listaJugadores)))
+            	{
+					controller_cargarJugadoresDesdeTexto("jugadores.csv",listaJugadores); // r
+					controller_cargarSeleccionesDesdeTexto("selecciones.csv", listaSelecciones); // r
+            	}
+            	else
+            	{
+            		puts("\nLa carga de archivos ya fue realizada...");
+            	}
                 break;
             case 2:
             	controller_agregarJugador(listaJugadores);

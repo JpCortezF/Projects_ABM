@@ -287,10 +287,13 @@ int convocarJugadores(LinkedList* pArrayListSeleccion, LinkedList* pArrayListJug
 						}
 					}
 				}
+				else{
+					puts("\nEl jugador ya se encuentra convocado en una seleccion.");
+				}
 				if(idSeleccion != 0 && option == 'B')
 				{
 					printHeadboard();
-					printOnePlayer(unJugador);
+					printOneSummonedPlayer(unJugador, pArrayListSeleccion);
 					utn_getNumberInt(&continuar,"\nIngrese '1' para continuar: ","\nError, ingrese '1' para continuar...",1,1,200);
 					printListSeleccion(pArrayListSeleccion);
 					utn_getNumberInt(&idSeleccion,"\nIngrese un ID para quitar seleccionado: ", "\nError, ingrese un ID opcion valida...",1,32,200);
@@ -303,6 +306,7 @@ int convocarJugadores(LinkedList* pArrayListSeleccion, LinkedList* pArrayListJug
 						selec_getConvocados(unConvocado, &convocados);
 						convocados--;
 						selec_setConvocados(unConvocado, convocados);
+						puts("\nJugador retirado de su seleccion. :(");
 					}else{
 						printf("\nEl jugador no pertecenece a ese seleccionado...\n");
 					}
