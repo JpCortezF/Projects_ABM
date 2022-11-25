@@ -123,4 +123,10 @@ int controller_listarSelecciones(LinkedList* pArrayListSeleccion);
  */
 int controller_guardarSeleccionesModoTexto(char* path , LinkedList* pArrayListSeleccion);
 
-
+/**
+ * recorre la lista y busca la coincidencia con el id recibido por parametro
+ * @param pArrayListSeleccion puntero a la lista LinkedList
+ * @param idSeleccion tipo int
+ * @return retorna -1 como ERROR y para BIEN retorna el indice de coincidencia
+ */
+int searchSeleccionById(LinkedList* pArrayListSeleccion, int idSeleccion);

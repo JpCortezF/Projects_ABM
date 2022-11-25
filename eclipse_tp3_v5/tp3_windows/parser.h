@@ -12,6 +12,15 @@
  */
 int parser_JugadorFromText(FILE* pFile , LinkedList* pArrayListJugador);
 
+/**
+ *
+ * @param pFile
+ * @param pArrayListJugador
+ * @param pArrayListSeleccion
+ * @return
+ */
+int parser_SaveJugadorToBinary(FILE* pFile, LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion);
+
 /** \brief Parsea los datos de los jugadores desde el archivo binario.
  *
  * \param path char* recibe la ruta del archivo

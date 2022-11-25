@@ -3,7 +3,9 @@
 #include <string.h>
 #include "utn_get.h"
 #include "Jugador.h"
+#include "Controller.h"
 #include "Seleccion.h"
+#include "Informes.h"
 
 Seleccion* selec_new()
 {
@@ -121,50 +123,6 @@ int selec_getConvocados(Seleccion* this,int* convocados)
 	}
 	return retorno;
 }
-void printHeadboardSeleccion()
-{
-	puts("|======|================|===============|==============|");
-	puts("|  ID  |      Pais      | Confederacion |  Convocados  |");
-	puts("|------|----------------|---------------|--------------|");
-}
-void printOneSeleccion(Seleccion* unaSeleccion)
-{
-	int id;
-	char pais[30];
-	char confederacion[60];
-	int convocados;
-	selec_getId(unaSeleccion, &id);
-	selec_getPais(unaSeleccion, pais);
-	selec_getConfederacion(unaSeleccion, confederacion);
-	selec_getConvocados(unaSeleccion, &convocados);
-	printf("|  %2d  | %14s |   %8s    |      %2d      |\n",id,pais,confederacion,convocados);
-}
-int printListSeleccion(LinkedList* pArrayListSeleccion)
-{
-	int retorno=-1;
-	int cantidad;
-	Seleccion* seleccion;
-
-	if(pArrayListSeleccion!=NULL)
-	{
-		printHeadboardSeleccion();
-		cantidad=ll_len(pArrayListSeleccion);
-		if(cantidad > 0)
-		{
-			for(int i=0; i<cantidad; i++)
-			{
-				seleccion = ll_get(pArrayListSeleccion, i);
-				printOneSeleccion(seleccion);
-			}
-			printf("|======================================================|\n");
-		}else{
-    		printf("\nNo hay selecciones cargadas...\n");
-		}
-
-		retorno=0;
-	}
-	return retorno;
-}
 int compareStrings(char* pais, char* nacionalidad)
 {
 	int retorno=-1;
@@ -181,35 +139,12 @@ int compareStrings(char* pais, char* nacionalidad)
 	}
 	return retorno;
 }
-int searchSeleccionById(LinkedList* pArrayListSeleccion, int idSeleccion)
-{
-	int cantidad;
-	int index=-1;
-	int idAux;
-	Seleccion* unaSeleccion;
-	if(pArrayListSeleccion!=NULL)
-	{
-		cantidad = ll_len(pArrayListSeleccion);
-		for(int i=0; i<cantidad; i++)
-		{
-			unaSeleccion = ll_get(pArrayListSeleccion, i);
-			selec_getId(unaSeleccion, &idAux);
-			if(idAux == idSeleccion)
-			{
-				index = ll_indexOf(pArrayListSeleccion, unaSeleccion);
-				break;
-			}
-		}
-	}
-	return index;
-}
 int convocarJugadores(LinkedList* pArrayListSeleccion, LinkedList* pArrayListJugador)
 {
 	int retorno=-1;
 	char option;
-	char pais[30];
-	char nacionalidad[52];
-	int getIdSeleccion;
+	char pais[100];
+	char nacionalidad[82];
 	int index;
 	int continuar;
 	int idJugador;
@@ -281,13 +216,11 @@ int convocarJugadores(LinkedList* pArrayListSeleccion, LinkedList* pArrayListJug
 						}
 						else
 						{
-							printf("pais: %s\n", pais);
-							printf("nacionalidad: %s\n", nacionalidad);
 							printf("\n-> No podes convocar un jugador que su nacionalidad no corresponde con su pais...\n");
 						}
 					}
 				}
-				else{
+				else if(idSeleccion != 0 && option == 'A'){
 					puts("\nEl jugador ya se encuentra convocado en una seleccion.");
 				}
 				if(idSeleccion != 0 && option == 'B')
@@ -295,21 +228,13 @@ int convocarJugadores(LinkedList* pArrayListSeleccion, LinkedList* pArrayListJug
 					printHeadboard();
 					printOneSummonedPlayer(unJugador, pArrayListSeleccion);
 					utn_getNumberInt(&continuar,"\nIngrese '1' para continuar: ","\nError, ingrese '1' para continuar...",1,1,200);
-					printListSeleccion(pArrayListSeleccion);
-					utn_getNumberInt(&idSeleccion,"\nIngrese un ID para quitar seleccionado: ", "\nError, ingrese un ID opcion valida...",1,32,200);
 					index = searchSeleccionById(pArrayListSeleccion, idSeleccion);
-					jug_getIdSeleccion(unJugador, &getIdSeleccion);
-					if(getIdSeleccion == idSeleccion)
-					{
-						jug_setIdSeleccion(unJugador, 0);
-						unConvocado = ll_get(pArrayListSeleccion, index);
-						selec_getConvocados(unConvocado, &convocados);
-						convocados--;
-						selec_setConvocados(unConvocado, convocados);
-						puts("\nJugador retirado de su seleccion. :(");
-					}else{
-						printf("\nEl jugador no pertecenece a ese seleccionado...\n");
-					}
+					jug_setIdSeleccion(unJugador, 0);
+					unConvocado = ll_get(pArrayListSeleccion, index);
+					selec_getConvocados(unConvocado, &convocados);
+					convocados--;
+					selec_setConvocados(unConvocado, convocados);
+					puts("\nJugador retirado de su seleccion. :(");
 				}
 			}
 		}

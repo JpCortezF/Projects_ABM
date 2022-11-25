@@ -3,7 +3,9 @@
 #include <string.h>
 #include "Jugador.h"
 #include "utn_get.h"
+#include "Informes.h"
 #include "Seleccion.h"
+#include "Controller.h"
 
 Jugador* jug_new()
 {
@@ -165,121 +167,6 @@ int jug_getIdSeleccion(Jugador* this,int* idSeleccion)
 	}
 	return retorno;
 }
-void printHeadboard(void)
-{
-	printf("|=======|=============================|============|======================|==================|=================|\n");
-	printf("|   ID  |       Nombre Completo       |    Edad    |       Posicion       |   Nacionalidad   |   IdSeleccion   |\n");
-	printf("|-------|-----------------------------|------------|----------------------|------------------|-----------------|\n");
-}
-void printOnePlayer(Jugador* unJugador)
-{
-	int id;
-	char nombreCompleto[120];
-	int edad;
-	char posicion[60];
-	char nacionalidad[60];
-	char sinConvocar[40]={"No convocado"};
-	int idSeleccion;
-
-	if(unJugador!=NULL)
-	{
-		jug_getId(unJugador, &id);
-		jug_getNombreCompleto(unJugador, nombreCompleto);
-		jug_getEdad(unJugador, &edad);
-		jug_getPosicion(unJugador, posicion);
-		jug_getNacionalidad(unJugador, nacionalidad);
-		jug_getIdSeleccion(unJugador, &idSeleccion);
-		printf("|  %3d  | %24s    |     %2d     | %20s | %15s  | %15s |\n",id,nombreCompleto,edad,posicion,nacionalidad,sinConvocar);
-	}
-}
-int printListPlayers(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion)
-{
-	int retorno=-1;
-	int cantidad;
-	int auxId;
-	Jugador* jugadores;
-
-	if(pArrayListJugador!=NULL)
-	{
-		printHeadboard();
-    	cantidad = ll_len(pArrayListJugador);
-    	if(cantidad > 0)
-    	{
-			for(int i=0; i<cantidad; i++)
-			{
-				jugadores = ll_get(pArrayListJugador, i);
-				jug_getIdSeleccion(jugadores, &auxId);
-				if(auxId != 0)
-				{
-					printOneSummonedPlayer(jugadores, pArrayListSeleccion);
-				}
-				else{
-					printOnePlayer(jugadores);
-				}
-			}
-			printf("|==============================================================================================================|\n");
-    	}else{
-    		printf("\nNo hay jugadores cargados...\n");
-    	}
-    	retorno=0;
-	}
-	return retorno;
-}
-void printOneSummonedPlayer(Jugador* unJugador, LinkedList* pArrayListSeleccion)
-{
-	int id;
-	char nombreCompleto[120];
-	int edad;
-	char posicion[60];
-	char nacionalidad[42];
-	int idSeleccion;
-	char pais[68];
-	int index;
-	Seleccion* seleccionado;
-
-	if(unJugador!=NULL && pArrayListSeleccion!=NULL)
-	{
-		jug_getId(unJugador, &id);
-		jug_getNombreCompleto(unJugador, nombreCompleto);
-		jug_getEdad(unJugador, &edad);
-		jug_getPosicion(unJugador, posicion);
-		jug_getNacionalidad(unJugador, nacionalidad);
-		jug_getIdSeleccion(unJugador, &idSeleccion);
-		index = searchSeleccionById(pArrayListSeleccion, idSeleccion);
-		seleccionado = ll_get(pArrayListSeleccion, index);
-		selec_getPais(seleccionado, pais);
-		printf("|  %3d  | %24s    |     %2d     | %20s | %15s  | %15s |\n",id,nombreCompleto,edad,posicion,nacionalidad,pais);
-	}
-}
-int printSummonedPlayers(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion)
-{
-	int retorno=-1;
-	int auxId;
-	int cantidad;
-	Jugador* jugadores;
-
-	if(pArrayListJugador!=NULL)
-	{
-    	cantidad = ll_len(pArrayListJugador);
-    	if(cantidad > 0)
-    	{
-    		printHeadboard();
-			for(int i=0; i<cantidad; i++)
-			{
-				jugadores = ll_get(pArrayListJugador, i);
-				jug_getIdSeleccion(jugadores, &auxId);
-				if(auxId != 0)
-				{
-					printOneSummonedPlayer(jugadores, pArrayListSeleccion);
-				}
-			}
-			printf("|==============================================================================================================|\n");
-    	}else{
-    		printf("\nNo hay jugadores cargados...\n");
-    	}
-	}
-	return retorno;
-}
 int player_idGenerator(int* id)
 {
 	int retorno=-1;
@@ -331,10 +218,10 @@ int addPlayer(LinkedList* pArrayListJugador)
 		if(!(ll_isEmpty(pArrayListJugador)))
 		{
 			player_idGenerator(&id);
-			utn_getString(auxNombre, "\nIngrese nombre completo: ", "\nHa ocurrido un problema en la carga del nombre...", 150);
+			utn_getString(auxNombre, "\nIngrese nombre completo: ", "\nHa ocurrido un problema en la carga del nombre...",30,150);
 			utn_getNumberInt(&edad, "\nIngrese edad: ", "\nIngrese una edad dentro de los parametros...(16-50)", 16, 50, 150);
-			utn_getString(auxPosicion, "\nIngrese posicion: ", "\nHa ocurrido un problema en la carga de la posicion...", 150);
-			utn_getString(auxNacionalidad, "\nIngrese nacionalidad: ", "\nHa ocurrido un problema en la carga de la nacionalidad...", 150);
+			utn_getString(auxPosicion, "\nIngrese posicion: ", "\nHa ocurrido un problema en la carga de la posicion...",30, 150);
+			utn_getString(auxNacionalidad, "\nIngrese nacionalidad: ", "\nHa ocurrido un problema en la carga de la nacionalidad...",30, 150);
 			idSeleccion = 0;
 
 			jug_setId(newJugador, id);
@@ -404,7 +291,7 @@ int removePlayer(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion)
 			else
 			{
 				unJugador = ll_get(pArrayListJugador, index);
-				jug_getId(unJugador, &idJugador);
+				jug_getIdSeleccion(unJugador, &idJugador);
 				printHeadboard();
 				if(idJugador!=0)
 				{
@@ -431,11 +318,8 @@ int removePlayer(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion)
 						}
 						break;
 					case 2:
-						printf("	Baja cancelada!\n");
+						printf("   Baja cancelada!\n");
 						break;
-						printHeadboard();
-						printOnePlayer(unJugador);
-						printf("|==========================================================================================================|\n");
 				}
 			}
 		}else{
@@ -485,7 +369,7 @@ int editPlayer(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion)
 					switch(edit)
 					{
 						case 1:
-							utn_getString(auxNombre, "\nIngrese nombre completo: ", "\nHa ocurrido un problema en la carga del nombre...", 150);
+							utn_getString(auxNombre, "\nIngrese nombre completo: ", "\nHa ocurrido un problema en la carga del nombre...",30, 150);
 							jug_setNombreCompleto(unJugador, auxNombre);
 							break;
 						case 2:
@@ -493,17 +377,17 @@ int editPlayer(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion)
 							jug_setEdad(unJugador, auxEdad);
 							break;
 						case 3:
-							utn_getString(auxPosicion, "\nIngrese posicion: ", "\nHa ocurrido un problema en la carga de la posicion...", 150);
+							utn_getString(auxPosicion, "\nIngrese posicion: ", "\nHa ocurrido un problema en la carga de la posicion...",30, 150);
 							jug_setPosicion(unJugador, auxPosicion);
 							break;
 						case 4:
-							utn_getString(auxNacionalidad, "\nIngrese nacionalidad: ", "\nHa ocurrido un problema en la carga de la nacionalidad...", 150);
+							utn_getString(auxNacionalidad, "\nIngrese nacionalidad: ", "\nHa ocurrido un problema en la carga de la nacionalidad...",30, 150);
 							jug_setNacionalidad(unJugador, auxNacionalidad);
 							break;
-							printHeadboard();
-							printOnePlayer(unJugador);
-							printf("|==========================================================================================================|\n");
 					}
+					printHeadboard();
+					printOneSummonedPlayer(unJugador, pArrayListSeleccion);
+					printf("|==============================================================================================================|\n");
 				}
 		}else{
     		puts("\nPrimero tenes que hacer la carga del archivo .csv!");
@@ -514,16 +398,14 @@ int editPlayer(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion)
 }
 int compareByNacionality(void* jugadorUno,void* jugadorDos)
 {
-	int retorno=-1;
-	char nacionalidad[30];
-	char nacionalidad2[30];
+	int retorno=0; //si son iguales
+	char nacionalidad[100];
+	char nacionalidad2[100];
 
-	if(jugadorUno!=NULL && jugadorDos!=NULL)
-	{
-		jug_getNacionalidad(jugadorUno, nacionalidad);
-		jug_getNacionalidad(jugadorDos, nacionalidad2);
-		retorno = strcmp(nacionalidad, nacionalidad2);
-	}
+	jug_getNacionalidad(jugadorUno, nacionalidad);
+	jug_getNacionalidad(jugadorDos, nacionalidad2);
+
+	retorno = strcmp(nacionalidad, nacionalidad2);
 	return retorno;
 }
 int compareByConference(void* seleccionUno,void* seleccionDos)
@@ -531,12 +413,11 @@ int compareByConference(void* seleccionUno,void* seleccionDos)
 	int retorno=-1;
 	char confederacion[30];
 	char confederacion2[30];
-	if(seleccionUno!=NULL && seleccionDos!=NULL)
-	{
-		selec_getConfederacion(seleccionUno, confederacion);
-		selec_getConfederacion(seleccionDos, confederacion2);
-		retorno = strcmp(confederacion, confederacion2);
-	}
+
+	selec_getConfederacion(seleccionUno, confederacion);
+	selec_getConfederacion(seleccionDos, confederacion2);
+	retorno = strcmp(confederacion, confederacion2);
+
 	return retorno;
 }
 int compareByAge(void* jugadorUno,void* jugadorDos)
@@ -544,16 +425,15 @@ int compareByAge(void* jugadorUno,void* jugadorDos)
 	int retorno=0;
 	int edad;
 	int edad2;
-	char edadString[10];
-	char edad2String[10];
-
-	if(jugadorUno!=NULL && jugadorDos!=NULL)
+	jug_getEdad(jugadorUno, &edad);
+	jug_getEdad(jugadorDos, &edad2);
+	if(edad > edad2)
 	{
-		jug_getEdad(jugadorUno, &edad);
-		jug_getEdad(jugadorDos, &edad2);
-		sprintf(edadString,"%d",edad);
-		sprintf(edad2String,"%d",edad2);
-		retorno = strcmp(edadString,edad2String);
+		retorno=1;
+	}
+	if(edad < edad2)
+	{
+		retorno=-1;
 	}
 	return retorno;
 }

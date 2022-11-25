@@ -127,31 +127,6 @@ int jug_setIdSeleccion(Jugador* this,int idSeleccion);
  */
 int jug_getIdSeleccion(Jugador* this,int* idSeleccion);
 
-/**
- * Una cabecera para los campos de la estructura Jugadores
- */
-void printHeadboard(void);
-
-/**
- * Imprime UN jugador
- * @param unJugador puntero a la estructura Jugador
- */
-void printOnePlayer(Jugador* unJugador);
-/**
- * Recorre la lista y va imprimiendo los jugadores
- * @param pArrayListJugador puntero a la lista LinkedList
- * @param pArrayListSeleccion puntero a la lista LinkedList
- * @return retorna -1 como ERROR y 0 para indicar que no hubo errores
- */
-int printListPlayers(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion);
-/**
- * Imprime UN jugador con su pais
- * @param unJugador puntero a la estructura Jugador
- * @param pArrayListSeleccion puntero a la lista LinkedList
- */
-void printOneSummonedPlayer(Jugador* unJugador, LinkedList* pArrayListSeleccion);
-int printSummonedPlayers(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion);
-
 int searchPlayerById(LinkedList* pArrayListJugador, int id);
 
 int addPlayer(LinkedList* pArrayListJugador);

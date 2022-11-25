@@ -86,17 +86,7 @@ int selec_setConvocados(Seleccion* this,int convocados);
  * @return retorna -1 como ERROR y 0 para indicar que no hubo errores
  */
 int selec_getConvocados(Seleccion* this,int* convocados);
-/**
- * Imprime UNA seleccion
- * @param unaSeleccion puntero a la estructura Seleccion
- */
-void printOneSeleccion(Seleccion* unaSeleccion);
-/**
- * Recorre la lista y va imprimiendo las selecciones
- * @param pArrayListSeleccion puntero a la lista LinkedList
- * @return retorna -1 como ERROR y 0 para indicar que no hubo errores
- */
-int printListSeleccion(LinkedList* pArrayListSeleccion);
+
 /**
  * recibe dos strings y compara las primeras 3 letras
  * @param pais tipo char
@@ -104,13 +94,6 @@ int printListSeleccion(LinkedList* pArrayListSeleccion);
  * @return retorna -1 como ERROR y 0 indicando que hubo exito
  */
 int compareStrings(char* pais, char* nacionalidad);
-/**
- * recorre la lista y busca la coincidencia con el id recibido por parametro
- * @param pArrayListSeleccion puntero a la lista LinkedList
- * @param idSeleccion tipo int
- * @return retorna -1 como ERROR y para BIEN retorna el indice de coincidencia
- */
-int searchSeleccionById(LinkedList* pArrayListSeleccion, int idSeleccion);
 /**
  * Se le pregunta al usuario para la convocatoria de un jugador o la desconvocatoria
  * @param pArrayListSeleccion puntero a la lista LinkedList de selecciones

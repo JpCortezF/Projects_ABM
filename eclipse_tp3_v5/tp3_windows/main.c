@@ -76,7 +76,7 @@ int main()
             	controller_guardarJugadoresModoBinario("data.bin", listaJugadores, listaSelecciones); //wb
             	break;
             case 9:
-           		controller_cargarJugadoresDesdeBinario("data.bin", listaJugadores, listaSelecciones); // rb
+            	controller_cargarJugadoresDesdeBinario("data.bin", listaJugadores, listaSelecciones); // rb
             	break;
             case 10:
            		controller_guardarJugadoresModoTexto("jugadores.csv",listaJugadores); // w

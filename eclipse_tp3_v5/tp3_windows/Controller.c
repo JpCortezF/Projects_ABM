@@ -6,6 +6,7 @@
 #include "Jugador.h"
 #include "Seleccion.h"
 #include "LinkedList.h"
+#include "Informes.h"
 
 int controller_cargarJugadoresDesdeTexto(char* path , LinkedList* pArrayListJugador)
 {
@@ -154,6 +155,7 @@ int controller_ordenarJugadores(LinkedList* pArrayListJugador, LinkedList* pArra
 					}
 					break;
 			}
+			printListPlayers(pArrayListJugador, pArrayListSeleccion);
 		}else{
     		puts("\nPrimero tenes que hacer la carga del archivo .csv!");
 		}
@@ -208,10 +210,6 @@ int controller_guardarJugadoresModoTexto(char* path , LinkedList* pArrayListJuga
 int controller_guardarJugadoresModoBinario(char* path , LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion)
 {
 	int retorno=-1;
-	int cantidad;
-	int idConfederacion;
-	int auxId;
-	Jugador* unJugador;
 	FILE* pFile;
 
 	if(pArrayListJugador!=NULL)
@@ -221,51 +219,7 @@ int controller_guardarJugadoresModoBinario(char* path , LinkedList* pArrayListJu
 			pFile=fopen(path, "wb");
 			if(pFile!=NULL)
 			{
-				utn_getNumberInt(&idConfederacion,"\n|~~~INGRESE LA CONFEDERACION QUE QUIERE CREAR Y GUARDAR EN EL ARCHIVO~~~|\n1. UEFA\n2. AFC\n3. CONMEBOL\n4. CONCACAF\n5. CAF\n->: ","\nError. ingrese una opcion valida...",1,5,200);
-				cantidad=ll_len(pArrayListJugador);
-				for(int i=0; i<cantidad;i++)
-				{
-					unJugador = ll_get(pArrayListJugador, i);
-					jug_getIdSeleccion(unJugador, &auxId);
-					if(auxId!=0)
-					{
-						ll_sort(pArrayListSeleccion, compareByConference, 1);
-						switch(idConfederacion)
-						{
-							case 1:
-								if(auxId == 1 || auxId == 5 || auxId == 11 || auxId == 14 || auxId == 16 || auxId == 17 || auxId == 19 || auxId == 20 || auxId == 25 || auxId == 26 || auxId == 29 || auxId == 30)
-								{
-									fwrite(unJugador,sizeof(Jugador),1,pFile);
-								}
-								break;
-							case 2:
-								if(auxId == 2 || auxId == 4 || auxId == 9 || auxId == 21 || auxId == 27 || auxId == 29)
-								{
-									fwrite(unJugador,sizeof(Jugador),1,pFile);
-								}
-								break;
-							case 3:
-								if(auxId == 3 || auxId == 6 || auxId == 13 || auxId == 32)
-								{
-									fwrite(unJugador,sizeof(Jugador),1,pFile);
-								}
-								break;
-							case 4:
-								if(auxId == 8 || auxId == 10 || auxId == 15 || auxId == 24)
-								{
-									fwrite(unJugador,sizeof(Jugador),1,pFile);
-								}
-								break;
-							case 5:
-								if(auxId == 7 || auxId == 18 || auxId == 23 || auxId == 28 || auxId == 31)
-								{
-									fwrite(unJugador,sizeof(Jugador),1,pFile);
-								}
-								break;
-						}
-						puts("\nCreando y guardando archivo binario 'data.bin'...");
-					}
-				}
+				parser_SaveJugadorToBinary(pFile, pArrayListJugador, pArrayListSeleccion);
 			}
 			else{
 				printf("Ha ocurrido un error al abrir el archivo...\n");
@@ -274,7 +228,6 @@ int controller_guardarJugadoresModoBinario(char* path , LinkedList* pArrayListJu
 		else{
     		puts("\nPrimero tenes que hacer la carga del archivo .csv!");
     	}
-
 		retorno=0;
 	}
 	fclose(pFile);
@@ -369,5 +322,26 @@ int controller_guardarSeleccionesModoTexto(char* path , LinkedList* pArrayListSe
 	fclose(pFile);
     return retorno;
 }
-
+int searchSeleccionById(LinkedList* pArrayListSeleccion, int idSeleccion)
+{
+	int cantidad;
+	int index=-1;
+	int idAux;
+	Seleccion* unaSeleccion;
+	if(pArrayListSeleccion!=NULL)
+	{
+		cantidad = ll_len(pArrayListSeleccion);
+		for(int i=0; i<cantidad; i++)
+		{
+			unaSeleccion = ll_get(pArrayListSeleccion, i);
+			selec_getId(unaSeleccion, &idAux);
+			if(idAux == idSeleccion)
+			{
+				index = ll_indexOf(pArrayListSeleccion, unaSeleccion);
+				break;
+			}
+		}
+	}
+	return index;
+}
 
