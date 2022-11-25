@@ -4,7 +4,7 @@ id,nombreCompleto,edad,posicion,nacionalidad,idSeleccion
 3,Agustin Marchesin,33,Portero,Argentino,0
 4,Esteban Andrada,30,Portero,Argentino,0
 5,Franco Armani,34,Portero,Argentino,0
-6,Geronimo Rulli,29,Portero,Argentino,0
+6,Geronimo Rulli,29,Portero,Argentino,3
 7,Agustin Rossi,25,Portero,Argentino,0
 8,Cristian Romero,23,Defensa central,Argentino,0
 9,Lisandro Martinez,23,Defensa central,Argentino,0
@@ -62,8 +62,8 @@ id,nombreCompleto,edad,posicion,nacionalidad,idSeleccion
 61,Fred,29,Mediocentro,Brasilero,0
 62,everton Ribeiro,33,Mediocentro,Brasilero,0
 63,Lucas Paqueta,25,Mediocentro ofensivo,Brasilero,0
-64,Vinicius Junior,22,Extremo izquierdo,Brasilero,0
-65,Neymar ,30,Extremo izquierdo,Brasilero,0
+64,Vinicius Junior,22,Extremo izquierdo,Brasilero,6
+65,Neymar Junior,30,Extremo izquierdo,Brasilero,6
 66,Antony,22,Extremo derecho,Brasilero,0
 67,Rodrygo,21,Extremo derecho,Brasilero,0
 68,Raphinha,25,Extremo derecho,Brasilero,0

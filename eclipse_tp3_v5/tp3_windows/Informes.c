@@ -14,7 +14,7 @@ void printHeadboard(void)
 void printOnePlayer(Jugador* unJugador)
 {
 	int id;
-	char nombreCompleto[120];
+	char nombreCompleto[122];
 	int edad;
 	char posicion[60];
 	char nacionalidad[60];
@@ -73,7 +73,7 @@ void printOneSummonedPlayer(Jugador* unJugador, LinkedList* pArrayListSeleccion)
 	char posicion[60];
 	char nacionalidad[42];
 	int idSeleccion;
-	char pais[60];
+	char pais[58];
 	int index;
 	Seleccion* seleccionado;
 

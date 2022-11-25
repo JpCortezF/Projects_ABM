@@ -128,14 +128,15 @@ int compareStrings(char* pais, char* nacionalidad)
 	int retorno=-1;
 	for(int i=0; i<3; i++)
 	{
-		if(pais[i] == nacionalidad[i])
-		{
-			retorno=0;
-		}
-		else{
-			retorno=-1;
-			break;
-		}
+		pais++;
+		nacionalidad++;
+	}
+	if(stricmp(pais, nacionalidad))
+	{
+		retorno=0;
+	}
+	else{
+		retorno=-1;
 	}
 	return retorno;
 }
@@ -143,8 +144,8 @@ int convocarJugadores(LinkedList* pArrayListSeleccion, LinkedList* pArrayListJug
 {
 	int retorno=-1;
 	char option;
-	char pais[100];
-	char nacionalidad[82];
+	char pais[82];
+	char nacionalidad[60];
 	int index;
 	int continuar;
 	int idJugador;
@@ -216,6 +217,8 @@ int convocarJugadores(LinkedList* pArrayListSeleccion, LinkedList* pArrayListJug
 						}
 						else
 						{
+							printf("pais: %s\n", pais);
+							printf("nacionalidad: %s\n", nacionalidad);
 							printf("\n-> No podes convocar un jugador que su nacionalidad no corresponde con su pais...\n");
 						}
 					}

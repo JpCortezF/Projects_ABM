@@ -208,6 +208,7 @@ int addPlayer(LinkedList* pArrayListJugador)
 	char auxNombre[120];
 	char auxPosicion[60];
 	char auxNacionalidad[60];
+	int nombreValidado=-1;
 	int idSeleccion;
 	int edad;
 	int id=0;
@@ -218,24 +219,24 @@ int addPlayer(LinkedList* pArrayListJugador)
 		if(!(ll_isEmpty(pArrayListJugador)))
 		{
 			player_idGenerator(&id);
-			utn_getString(auxNombre, "\nIngrese nombre completo: ", "\nHa ocurrido un problema en la carga del nombre...",30,150);
+			nombreValidado = utn_getString(auxNombre, "\nIngrese nombre completo: ", "\nReingrese nombre completo (Nombre y Apellido)...",30,150);
 			utn_getNumberInt(&edad, "\nIngrese edad: ", "\nIngrese una edad dentro de los parametros...(16-50)", 16, 50, 150);
 			utn_getString(auxPosicion, "\nIngrese posicion: ", "\nHa ocurrido un problema en la carga de la posicion...",30, 150);
 			utn_getString(auxNacionalidad, "\nIngrese nacionalidad: ", "\nHa ocurrido un problema en la carga de la nacionalidad...",30, 150);
 			idSeleccion = 0;
-
-			jug_setId(newJugador, id);
-			jug_setNombreCompleto(newJugador, auxNombre);
-			jug_setEdad(newJugador, edad);
-			jug_setPosicion(newJugador, auxPosicion);
-			jug_setNacionalidad(newJugador, auxNacionalidad);
-			jug_setIdSeleccion(newJugador, idSeleccion);
-
-			ll_add(pArrayListJugador, newJugador);
-			printHeadboard();
-			printOnePlayer(newJugador);
-			puts("\n-> Jugador cargado con exito...");
-
+			if(nombreValidado != -1)
+			{
+				jug_setId(newJugador, id);
+				jug_setNombreCompleto(newJugador, auxNombre);
+				jug_setEdad(newJugador, edad);
+				jug_setPosicion(newJugador, auxPosicion);
+				jug_setNacionalidad(newJugador, auxNacionalidad);
+				jug_setIdSeleccion(newJugador, idSeleccion);
+				ll_add(pArrayListJugador, newJugador);
+				printHeadboard();
+				printOnePlayer(newJugador);
+				puts("\n-> Jugador cargado con exito...");
+			}
 			retorno=0;
 		}else{
     		puts("\nPrimero tenes que hacer la carga del archivo .csv!");
@@ -355,7 +356,7 @@ int editPlayer(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion)
 				}
 				else{
 					unJugador = ll_get(pArrayListJugador, index);
-					jug_getId(unJugador, &idJugador);
+					jug_getIdSeleccion(unJugador, &idJugador);
 					printHeadboard();
 					if(idJugador!=0)
 					{
@@ -386,7 +387,13 @@ int editPlayer(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion)
 							break;
 					}
 					printHeadboard();
-					printOneSummonedPlayer(unJugador, pArrayListSeleccion);
+					if(idJugador!=0)
+					{
+						printOneSummonedPlayer(unJugador, pArrayListSeleccion);
+					}
+					else{
+						printOnePlayer(unJugador);
+					}
 					printf("|==============================================================================================================|\n");
 				}
 		}else{
@@ -410,9 +417,9 @@ int compareByNacionality(void* jugadorUno,void* jugadorDos)
 }
 int compareByConference(void* seleccionUno,void* seleccionDos)
 {
-	int retorno=-1;
-	char confederacion[30];
-	char confederacion2[30];
+	int retorno=0;
+	char confederacion[100];
+	char confederacion2[100];
 
 	selec_getConfederacion(seleccionUno, confederacion);
 	selec_getConfederacion(seleccionDos, confederacion2);

@@ -2,7 +2,11 @@
 #define UTN_H_
 
 /*--------------------------------------------getString--------------------------------------------*/
+
 int isAChar(char* string, int len);
+
+int getChar(char* pResult);
+
 /**
  * @brief Se le pide al usuario el ingreso de un char validando el rango
  * @param pResult guarda el char
@@ -22,6 +26,7 @@ int utn_getChar(char* pResult, char* message, char* errorMessage, char minimo, c
  * @return retorna 0 si esta todo OK, -1 si hay un ERROR
  */
 int utn_getString(char* pResult, char* message, char* errorMessage, int len, int attemps);
+
 /*--------------------------------------------getNumber--------------------------------------------*/
 /**
  * @brief Se le pide al usario el ingreso de un float validando el rango

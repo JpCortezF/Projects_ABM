@@ -81,16 +81,24 @@ int isFloat(char* cadena, int len)
 }
 int isAChar(char* string, int len)
 {
-	int retorno=-1;
+	int retorno=0;
 
-	if(strlen(string) > 0)
+	if(string != NULL && len > 0)
 	{
 		for(int i=0; i < len && string[i] != '\0'; i++)
 		{
-			if((string[i]<'a' || string[i] > 'z') && (string[i]<'A' || string[i] > 'Z') && isspace(string[i])==0)
+			if((string[i]<'a' || string[i] > 'z') && (string[i]<'A' || string[i] > 'Z'))
 			{
-				retorno = 0;
-				break;
+				if(i != 0 && string[i] == ' ')
+				{
+					retorno=0;
+					break;
+				}
+				else
+				{
+					retorno = -1;
+					break;
+				}
 			}
 		}
 	}
@@ -102,7 +110,7 @@ int getChar(char* pResult)
 	char bufferString[LIMIT_LENGTH];
 
 	if(pResult!=NULL && myGets(bufferString, sizeof(bufferString)) == 0
-	&& isAChar(bufferString, sizeof(bufferString)))
+	&& isAChar(bufferString, sizeof(bufferString))==0)
 	{
 		strcpy(pResult, bufferString);
 		retorno=0;
@@ -143,7 +151,7 @@ int utn_getString(char* pResult, char* message, char* errorMessage, int len, int
 		if(pResult != NULL && message!= NULL && errorMessage != NULL && attemps >= 0)
 		{
 			printf("%s", message);
-			if((getChar(bufferString) == 0 && (strlen(bufferString)<=len)))
+			if(getChar(bufferString) == 0)
 			{
 				strncpy(pResult, bufferString, len);
 				retorno=0;
@@ -151,7 +159,6 @@ int utn_getString(char* pResult, char* message, char* errorMessage, int len, int
 			}
 			printf("%s\n", errorMessage);
 			attemps--;
-
 		}
 	}while(attemps>=0);
 

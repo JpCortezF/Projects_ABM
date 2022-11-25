@@ -114,6 +114,7 @@ int controller_ordenarJugadores(LinkedList* pArrayListJugador, LinkedList* pArra
 							ll_sort(pArrayListJugador, compareByNacionality, order);
 							break;
 					}
+					printListPlayers(pArrayListJugador, pArrayListSeleccion);
 					break;
 					case 'B':
 						utn_getNumberInt(&order, "\n-> Ingrese criterio de ordenamiento\n1. Criterio ascendente (1)\n2. Criterio descendente (2)\n3. Volver\n-> Ingrese criterio: ", "\nIngrese una opcion valida...",1,3,15);
@@ -127,6 +128,7 @@ int controller_ordenarJugadores(LinkedList* pArrayListJugador, LinkedList* pArra
 								ll_sort(pArrayListSeleccion, compareByConference, order);
 								break;
 						}
+						printListSeleccion(pArrayListSeleccion);
 						break;
 					case 'C':
 						utn_getNumberInt(&order, "\n-> Ingrese criterio de ordenamiento\n1. Criterio ascendente (1)\n2. Criterio descendente (2)\n3. Volver\n-> Ingrese criterio: ", "\nIngrese una opcion valida...",1,3,15);
@@ -140,6 +142,7 @@ int controller_ordenarJugadores(LinkedList* pArrayListJugador, LinkedList* pArra
 								ll_sort(pArrayListJugador, compareByAge, order);
 								break;
 						}
+						printListPlayers(pArrayListJugador, pArrayListSeleccion);
 						break;
 				case 'D':
 					utn_getNumberInt(&order, "\n-> Ingrese criterio de ordenamiento\n1. Criterio ascendente (1)\n2. Criterio descendente (2)\n3. Volver\n-> Ingrese criterio: ", "\nIngrese una opcion valida...",1,3,15);
@@ -153,9 +156,9 @@ int controller_ordenarJugadores(LinkedList* pArrayListJugador, LinkedList* pArra
 							ll_sort(pArrayListJugador, compareByName, order);
 							break;
 					}
+					printListPlayers(pArrayListJugador, pArrayListSeleccion);
 					break;
 			}
-			printListPlayers(pArrayListJugador, pArrayListSeleccion);
 		}else{
     		puts("\nPrimero tenes que hacer la carga del archivo .csv!");
 		}
@@ -196,6 +199,7 @@ int controller_guardarJugadoresModoTexto(char* path , LinkedList* pArrayListJuga
 					jug_getIdSeleccion(unJugador, &idSeleccion);
 					fprintf(pFile,"%d,%s,%d,%s,%s,%d\n",id,nombreCompleto,edad,posicion,nacionalidad,idSeleccion);
 				}
+		    	fclose(pFile);
 			}else{
 				printf("\nHa ocurrido un error al abrir el archivo...\n");
 			}
@@ -203,7 +207,6 @@ int controller_guardarJugadoresModoTexto(char* path , LinkedList* pArrayListJuga
     		puts("\nPrimero tenes que hacer la carga del archivo .csv!");
     	}
 		retorno=0;
-    	fclose(pFile);
     }
     return retorno;
 }
@@ -220,6 +223,7 @@ int controller_guardarJugadoresModoBinario(char* path , LinkedList* pArrayListJu
 			if(pFile!=NULL)
 			{
 				parser_SaveJugadorToBinary(pFile, pArrayListJugador, pArrayListSeleccion);
+				fclose(pFile);
 			}
 			else{
 				printf("Ha ocurrido un error al abrir el archivo...\n");
@@ -230,7 +234,6 @@ int controller_guardarJugadoresModoBinario(char* path , LinkedList* pArrayListJu
     	}
 		retorno=0;
 	}
-	fclose(pFile);
     return retorno;
 }
 int controller_convocarJugadores(LinkedList* pArrayListSeleccion, LinkedList* pArrayListJugador)
@@ -310,7 +313,8 @@ int controller_guardarSeleccionesModoTexto(char* path , LinkedList* pArrayListSe
 				selec_getPais(seleccionado, pais);
 				selec_getConfederacion(seleccionado, confederacion);
 				selec_getConvocados(seleccionado, &convocados);
-				fprintf(pFile,"%d,%s,%s,%d\n",id,pais,confederacion,convocados);
+				fprintf(pFile,"%d,%s,%s,%d\n",id,seleccionado->pais,seleccionado->confederacion,convocados);
+				// Uso el operador flecha porque por alguna razon, si llamo al getter, guarda un string (pais, confederacion) vacio. :(
 			}
 			puts("\nArchivos .csv guardados correctamente!");
 		}
