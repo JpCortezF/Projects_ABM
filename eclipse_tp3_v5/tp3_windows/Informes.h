@@ -29,6 +29,12 @@ int printListPlayers(LinkedList* pArrayListJugador, LinkedList* pArrayListSelecc
  */
 void printOneSummonedPlayer(Jugador* unJugador, LinkedList* pArrayListSeleccion);
 
+/**
+ * Imprime la lista de jugadores convocados
+ * @param pArrayListJugador puntero a la LinkedList
+ * @param pArrayListSeleccion puntero a la LinkedList
+ * @return retorna -1 como ERROR y 0 para indicar que no hubo errores
+ */
 int printSummonedPlayers(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion);
 
 /*-----------------------------------------------------------------Informes de selecciones------------------------------------------------------------------*/

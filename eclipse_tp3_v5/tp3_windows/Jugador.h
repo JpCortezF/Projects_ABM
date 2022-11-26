@@ -127,18 +127,71 @@ int jug_setIdSeleccion(Jugador* this,int idSeleccion);
  */
 int jug_getIdSeleccion(Jugador* this,int* idSeleccion);
 
+/**
+ * Recorre la linkedlist y compara la igualdad con el id que llega por parametro
+ * @param pArrayListJugador puntero a la LinkedList
+ * @param id tipo int
+ * @return retorna -1 como ERROR y 0 para indicar que no hubo errores
+ */
 int searchPlayerById(LinkedList* pArrayListJugador, int id);
 
+/**
+ * Se le pide al usuario el ingreso de cada uno de los campos
+ * @param pArrayListJugador puntero a la LinkedList
+ * @return retorna -1 como ERROR y 0 para indicar que no hubo errores
+ */
 int addPlayer(LinkedList* pArrayListJugador);
+
+/**
+ * abre un archivo binario, lo lee y despues sobreescribe sobre ese archivo
+ * @param id tipo int
+ * @return retorna -1 como ERROR y 0 para indicar que no hubo errores
+ */
 int player_idGenerator(int* id);
 
+/**
+ * Se le pide al usuario que ingrese el ID del jugador a modificar y lo muestra
+ * @param pArrayListJugador puntero a la LinkedList
+ * @param pArrayListSeleccion puntero a la LinkedList
+ * @return retorna -1 como ERROR y 0 para indicar que no hubo errores
+ */
 int editPlayer(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion);
+
+/**
+ * Se le pide al usuario que ingrese el ID del jugador a eliminar y lo muestra
+ * @param pArrayListJugador puntero a la LinkedList
+ * @param pArrayListSeleccion puntero a la LinkedList
+ * @return retorna -1 como ERROR y 0 para indicar que no hubo errores
+ */
 int removePlayer(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion);
 
+/**
+ * Compara por nacionalidad
+ * @param jugadorUno puntero a void
+ * @param jugadorDos puntero a void
+ * @return retorna lo devuelto por la comparacion
+ */
 int compareByNacionality(void* jugadorUno, void* jugadorDos);
+/**
+ * compara por confederacion
+ * @param seleccionUno puntero a void
+ * @param seleccionDos puntero a void
+ * @return retorna lo devuelto por la comparacion
+ */
 int compareByConference(void* seleccionUno,void* seleccionDos);
-
+/**
+ * compara por edad
+ * @param jugadorUno puntero a void
+ * @param jugadorDos puntero a void
+ * @return retorna lo devuelto por la comparacion
+ */
 int compareByAge(void* jugadorUno,void* jugadorDos);
+/**
+ * compara por nombre
+ * @param jugadorUno puntero a void
+ * @param jugadorDos puntero a void
+ * @return retorna lo devuelto por la comparacion
+ */
 int compareByName(void* jugadorUno,void* jugadorDos);
 
 #endif // jug_H_INCLUDED
