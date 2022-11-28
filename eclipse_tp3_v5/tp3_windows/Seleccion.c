@@ -160,15 +160,15 @@ int convocarJugadores(LinkedList* pArrayListSeleccion, LinkedList* pArrayListJug
 		if(!(ll_isEmpty(pArrayListJugador)))
 		{
 			utn_getChar(&option,"\nA) Convocar\nB) Quitar de la seleccion\n->: ","\nIngrese una opcion valida...",'A','B',200);
-
-			printListPlayers(pArrayListJugador, pArrayListSeleccion);
 			switch(option)
 			{
 				case 'A':
+					printListPlayers(pArrayListJugador, pArrayListSeleccion);
 					utn_getNumberInt(&idJugador, "\nIngrese ID del jugador para convocar: ","\nErorr, ingrese un ID valido...",1,10000000,200);
 					indexJugador = searchPlayerById(pArrayListJugador, idJugador);
 					break;
 				case 'B':
+					printSummonedPlayers(pArrayListJugador, pArrayListSeleccion);
 					utn_getNumberInt(&idJugador, "\nIngrese ID del jugador para quitar: ","\nErorr, ingrese un ID valido...",1,10000000,200);
 					indexJugador = searchPlayerById(pArrayListJugador, idJugador);
 					break;
