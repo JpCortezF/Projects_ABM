@@ -90,18 +90,18 @@ int main(void) {
 				if(seCalculo!=0)
 				{
 					printf("\n\n    Informar todos los resultados      \n\n");
-					printf("Porcentaje Uefa: %.2f\n", porcentajeUefa);
-					printf("Porcentaje Conmebol: %.2f\n", porcentajeConmebol);
-					printf("Porcentaje Concacaf: %.2f\n", porcentajeConcacaf);
-					printf("Porcentaje Afc: %.2f\n", porcentajeAfc);
-					printf("Porcentaje Ofc: %.2f\n", porcentajeOfc);
-					printf("Porcentaje Caf: %.2f\n", porcentajeCaf);
-					printf("\nEl Promedio de jugadores por confederacion es: %.2f\n", promedio);
+					printf("Porcentaje Uefa: %.2f%%\n", porcentajeUefa);
+					printf("Porcentaje Conmebol: %.2f%%\n", porcentajeConmebol);
+					printf("Porcentaje Concacaf: %.2f%%\n", porcentajeConcacaf);
+					printf("Porcentaje Afc: %.2f%%\n", porcentajeAfc);
+					printf("Porcentaje Ofc: %.2f%%\n", porcentajeOfc);
+					printf("Porcentaje Caf: %.2f%%\n", porcentajeCaf);
+					printf("\nEl Promedio de jugadores por confederacion es: %.2f%%\n", promedio);
 					seCalculo=0;
 					if(promedio >= 1.83 && costoMantenimiento!=0){
 						aumentoUefa = (float) (costoMantenimiento / 100 ) * 35;
 						aumentoUefaTotal = costoMantenimiento * 1.35;
-						printf("\nel costo de mantenimiento era de $usd %.2f y recibio un aumento de $usd %.2f, su nuevo valor es de: $usd %.2f\n\n",costoMantenimiento, aumentoUefa, aumentoUefaTotal);
+						printf("\nel costo de mantenimiento era de $usd %.2f y recibio un aumento de $usd %.2f%%, su nuevo valor es de: $usd %.2f\n\n",costoMantenimiento, aumentoUefa, aumentoUefaTotal);
 						utn_getNumberInt(&menuPrincipal, "\nIngrese '1' para volver al menu principal: ", "\nIngrese una opcion valida...\n",1,1,5);
 					}
 					else{

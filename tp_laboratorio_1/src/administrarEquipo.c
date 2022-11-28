@@ -23,18 +23,18 @@ int calcularCosto(float* pHospedaje, float* pComida, float* pTransporte, float* 
 			switch(opcion)
 			{
 			case 1:
-				utn_getNumberFloat(pHospedaje, "\nIngrese costo del hospedaje: ", "\nLo siento, ocurrio un problema con la carga :(\n", 2000, 9999999, 3);
+				utn_getNumberFloat(pHospedaje, "\nIngrese costo del hospedaje: ", "\nLo siento, ocurrio un problema con la carga", 1000, 9999999, 3);
 				break;
 			case 2:
-				utn_getNumberFloat(pComida, "\nIngrese costo del comida: ", "\nLo siento, ocurrio un problema con la carga :(\n", 2000, 9999999, 3);
+				utn_getNumberFloat(pComida, "\nIngrese costo del comida: ", "\nLo siento, ocurrio un problema con la carga", 1000, 9999999, 3);
 				break;
 			case 3:
-				utn_getNumberFloat(pTransporte, "\nIngrese costo del transporte: ", "\nLo siento, ocurrio un problema con la carga :(\n", 2000, 9999999, 3);
+				utn_getNumberFloat(pTransporte, "\nIngrese costo del transporte: ", "\nLo siento, ocurrio un problema con la carga", 1000, 9999999, 3);
 				break;
 			case 4:
 				if(pHospedaje!=0 || pComida!=0 || pTransporte!= 0)
 				{
-					utn_getNumberInt(&salir, "\n1.Seguir cargando\n2.Salir\nIngrese opcion: ","\nIngrese una opcion valida...\n",1,2,3);
+					utn_getNumberInt(&salir, "\n1.Seguir cargando\n2.Salir\nIngrese opcion: ","\nIngrese una opcion valida...",1,2,3);
 				}
 				break;
 			}
